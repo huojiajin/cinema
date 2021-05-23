@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="howard.cinema.core.dao.mapper.acl.RoleMapper">
+
+    <resultMap id="ResultMap" type="howard.cinema.core.dao.entity.acl.Role">
+        <id column="id" property="id"/>
+        <result column="insert_time" property="insertTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="name" property="name"/>
+        <result column="cinema_id" property="cinemaId"/>
+        <result column="info" property="info"/>
+        <result column="list" property="list"/>
+        <result column="stop" property="stop"/>
+    </resultMap>
+
+    <sql id="Insert_Column">
+        id,insert_time,update_time,name,cinema_id,info,list,stop
+    </sql>
+
+    <select id="findById" resultMap="ResultMap" parameterType="String">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema_role
+        where id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema_role order by list
+    </select>
+
+    <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.Role">
+        insert into cinema_role (
+        <include refid="Insert_Column"/>
+        ) values (
+        #{id},#{insertTime},#{updateTime},#{name},#{cinemaId},#{info},#{list},#{stop}
+        )
+    </insert>
+
+    <insert id="persistAll" parameterType="list">
+        insert into cinema_role (
+        <include refid="Insert_Column"/>
+        ) values
+        <foreach collection="list" item="role" separator=",">
+            (#{role.id},#{role.insertTime},#{role.updateTime},#{role.name},#{role.cinemaId},#{role.info},#{role.list},#{role.stop})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="howard.cinema.core.dao.entity.acl.Role">
+        update cinema_role set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="cinemaId != null and cinemaId != ''">
+            cinema_id = #{cinemaId},
+        </if>
+        <if test="info != null and info != ''">
+            info = #{info},
+        </if>
+        <if test="list != null and list != ''">
+            list = #{list},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findByName" resultMap="ResultMap" parameterType="String">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema_role
+        where name = #{name}
+    </select>
+
+    <update id="updateDelete" parameterType="String">
+        update cinema_role set stop = true where id = #{id}
+    </update>
+</mapper>

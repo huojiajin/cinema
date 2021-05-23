@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="howard.cinema.core.dao.mapper.acl.CinemaMapper">
+
+    <resultMap id="ResultMap" type="howard.cinema.core.dao.entity.acl.Cinema">
+        <id column="id" property="id"/>
+        <result column="insert_time" property="insertTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="type" property="type"/>
+        <result column="pos_type" property="posType"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="info" property="info"/>
+        <result column="list" property="list"/>
+        <result column="stop" property="stop"/>
+    </resultMap>
+
+    <sql id="Insert_Column">
+        id,insert_time,update_time,parent_id,name,code,type,pos_type,cinema_id,info,list,stop
+    </sql>
+
+    <select id="findById" resultMap="ResultMap" parameterType="String">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema
+        where id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema order by list
+    </select>
+
+    <select id="findByParentId" resultMap="ResultMap" parameterType="String">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema
+        where parent_id = #{parentId}
+    </select>
+
+    <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.Cinema">
+        insert into cinema (
+        <include refid="Insert_Column"/>
+        ) values (
+        #{id},#{insert_time},#{update_time},#{parent_id},#{name},#{code},#{type},#{pos_type},#{cinema_id},#{info},#{list},#{stop}
+        )
+    </insert>
+
+    <update id="update" parameterType="howard.cinema.core.dao.entity.acl.Cinema">
+        update cinema set
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
+        </if>
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="code != null and code != ''">
+            code = #{code},
+        </if>
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="posType != null">
+            pos_type = #{posType},
+        </if>
+        <if test="customerId != null and customerId != ''">
+            customer_id = #{customerId},
+        </if>
+        <if test="info != null and info != ''">
+            info = #{info},
+        </if>
+        <if test="list != null and list != ''">
+            list = #{list},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime}
+        </if>
+        where id = #{id}
+    </update>
+
+    <update id="updateStop">
+        update cinema set stop = #{stop} where id = #{id}
+    </update>
+</mapper>

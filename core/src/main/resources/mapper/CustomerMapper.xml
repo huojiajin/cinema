@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="howard.cinema.core.dao.mapper.acl.CustomerMapper">
+
+    <resultMap id="ResultMap" type="howard.cinema.core.dao.entity.acl.Customer">
+        <id column="id" property="id"/>
+        <result column="insert_time" property="insertTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <sql id="Insert_Column">
+        id,insert_time,update_time,name
+    </sql>
+
+    <select id="findAll" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_customer
+    </select>
+</mapper>

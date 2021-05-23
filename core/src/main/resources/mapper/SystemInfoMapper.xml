@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="howard.cinema.core.dao.mapper.acl.SystemInfoMapper">
+
+    <resultMap id="ResultMap" type="howard.cinema.core.dao.entity.acl.SystemInfo">
+        <id column="id" property="id"/>
+        <result column="insert_time" property="insertTime"/>
+        <result column="user_id" property="userId"/>
+        <result column="info" property="info"/>
+        <result column="eigen_value" property="eigenValue"/>
+    </resultMap>
+
+    <sql id="Insert_Column">
+        id,user_id,info,insert_time,eigen_value
+    </sql>
+
+    <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.SystemInfo">
+        insert into cinema_system_info (
+        <include refid="insert_column"></include>
+        ) values (#{id},#{userId},#{info},#{insertTime},#{eigenValue})
+    </insert>
+</mapper>
