@@ -9,7 +9,7 @@ import howard.cinema.core.dao.entity.common.BaseEntity;
  * @author: huojiajin
  * @time: 2020/5/27 15:31
  */
-public class CommonResponse<T extends BaseEntity> extends BaseEntity {
+public class CommonResponse<T> extends BaseEntity {
 
     private boolean success = true;
     private int errCode;//错误码

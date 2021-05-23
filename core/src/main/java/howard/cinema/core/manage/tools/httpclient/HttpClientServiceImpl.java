@@ -1,6 +1,6 @@
 package howard.cinema.core.manage.tools.httpclient;
 
-import hx.base.core.manage.common.CommonAbstract;
+import howard.cinema.core.manage.common.CommonAbstract;
 import org.apache.http.*;
 import org.apache.http.client.entity.GzipDecompressingEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;

@@ -1,10 +1,10 @@
-package howard.cinema.core;
+package howard.cinema.manage;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CoreApplicationTests {
+class ManageApplicationTests {
 
     @Test
     void contextLoads() {

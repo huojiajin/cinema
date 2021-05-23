@@ -10,10 +10,9 @@ import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
  */
 public class User extends AbstractInsertTimeEntity {
 
-    private String employeeNum;//工号
     private UserStatus status = UserStatus.NORMAL;// 状态
     private String roleId;// 用户所属角色Id
-    private String name;// 用户名
+    private String name;// 姓名
     private String mobile;// 手机号
     private String loginName;// 登录名
     private String password;//密码
@@ -35,14 +34,6 @@ public class User extends AbstractInsertTimeEntity {
             return value;
         }
 
-    }
-
-    public String getEmployeeNum() {
-        return employeeNum;
-    }
-
-    public void setEmployeeNum(String employeeNum) {
-        this.employeeNum = employeeNum;
     }
 
     public UserStatus getStatus() {
@@ -75,10 +66,6 @@ public class User extends AbstractInsertTimeEntity {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getLoginName() {
-        return loginName;
     }
 
     public void setLoginName(String loginName) {
