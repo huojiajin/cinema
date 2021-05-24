@@ -72,8 +72,10 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager {
     public String login(LoginRequest loginRequest) {
 
         CommonResponse<LoginResponse> response = new CommonResponse<>();
+        String verifyKey = MyMecachedPrefix.loginVerifyImagePrefix + loginRequest.getVerifyId();
+
         //校验验证码
-        String verifyCode = (String) memcachedClient.get(MyMecachedPrefix.loginVerifyImagePrefix + loginRequest.getVerifyId());
+        String verifyCode = (String) memcachedClient.get(verifyKey);
         if (hasText(verifyCode)) {
             if (!toUpper(loginRequest.getVerifyCode()).equals(toUpper(verifyCode))) {
                 return response.setError(ErrorType.VERIFY);
@@ -84,6 +86,9 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager {
             response.setMessage("验证码已超时");
             return response.toJson();
         }
+        //删除验证码缓存
+        memcachedClient.delete(verifyKey);
+
         //校验用户名
         User user = userManager.findByLoginName(loginRequest.getLoginName());
         if (user == null) {

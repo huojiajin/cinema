@@ -1,6 +1,6 @@
 package howard.cinema.manage.model.common;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @name: CommonPageRequest
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  */
 public class CommonPageRequest extends CommonRequest {
 
-    @NotBlank(message = "请选择页码")
+    @NotNull(message = "请选择页码")
     private int pageNo;
     private int pageSize = 16;
 

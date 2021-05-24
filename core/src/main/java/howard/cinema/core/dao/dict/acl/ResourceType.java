@@ -13,30 +13,36 @@ import java.util.List;
 public enum ResourceType {
 	
 	A_XTGL("系统管理", 1, 1, null) {},
-    A_XTGL_USER("用户管理", 11, 2, A_XTGL){},
-    A_XTGL_ROLE("角色管理", 12, 2, A_XTGL){},
-    A_XTGL_MOBILE("移动端权限管理", 13, 2, A_XTGL){},
-    B_RYTJ("人员统计",2, 1, null){},
-    B_RYTJ_CXRY("参训人员管理",21, 2, B_RYTJ){},
-//    B_RYTJ_RLZB("人力指标分析",22, 2, B_RYTJ){},
-    B_RYTJ_RYQK("人员情况统计",23, 2, B_RYTJ){},
-    C_JBFCS("基本法测试", 3, 1, null){},
-    C_JBFCS_SJGL("试卷管理", 31, 2, C_JBFCS){},
-    C_JBFCS_ZLGL("资料管理", 32, 2, C_JBFCS){},
-    C_JBFCS_JFGL("积分管理", 33, 2, C_JBFCS){},
-    D_JGFX("架构分析",4, 1, null){},
-//    E_XZZB("新资指标",5, 1, null){},
-//    E_XZZB_ZBGL("指标管理",51, 2, E_XZZB){},
-//    E_XZZB_CJRY("差距人员",52, 2, E_XZZB){},
-    F_ZDYXX("自定义消息",6, 1, null){},
-    G_DWFC("队伍分层",7, 1, null){},
-//    G_DWFC_MDGZ("名单规则设置",71, 2, G_DWFC){},
-//    G_DWFC_BMDGL("白名单管理",72, 2, G_DWFC){},
-    G_DWFC_HMDGL("黑名单管理",72, 2, G_DWFC){},
-    H_RYGL("荣誉管理",8, 1, null){},
-    I_RLZLC("离职流程",9, 1, null){},
-    I_RLZLC_RYZP("离职人员指派",91, 2, I_RLZLC){},
-    I_RLZLC_LZBGL("离职表管理",92, 2, I_RLZLC){},
+    A_XTGL_YCGL("影城管理", 11, 2, A_XTGL) {},
+    A_XTGL_USER("用户管理", 12, 2, A_XTGL){},
+    A_XTGL_ROLE("角色管理", 13, 2, A_XTGL){},
+
+    B_ZFSZ("支付设置", 2, 1, null){},
+    B_ZFSZ_ZFB("支付宝", 21, 2, B_ZFSZ){},
+    B_ZFSZ_wx("支付宝", 22, 2, B_ZFSZ){},
+
+    C_DDGL("订单管理", 3, 1, null){},
+    C_DDGL_ZDDGL("总订单管理", 31, 2, C_DDGL){},
+    C_DDGL_YPZDDGL("影票子订单管理", 32, 2, C_DDGL){},
+    C_DDGL_MPZDDGL("卖品子订单管理", 33, 2, C_DDGL){},
+    C_DDGL_ZFZDDGL("支付子订单管理", 34, 2, C_DDGL){},
+
+    D_GGGL("广告管理", 4, 1, null){},
+    D_GGGL_SCGL("素材管理", 41, 2, D_GGGL){},
+    D_GGGL_PQGL("排期管理", 42, 2, D_GGGL){},
+    D_GGGL_JBTJ("监播统计", 43, 2, D_GGGL){},
+
+    E_SJGL("升级管理", 5, 1, null){},
+    E_SJGL_APKGL("APK管理", 51, 2, E_SJGL){},
+    E_SJGL_SJLB("升级列表", 52, 2, E_SJGL){},
+    E_SJGL_SJLS("升级历史", 53, 2, E_SJGL){},
+
+    F_MPGL("卖品管理", 6, 1, null){},
+
+    G_SBGL("设备管理", 7, 1, null){},
+    G_SBGL_ZDGL("终端管理", 71, 2, G_SBGL){},
+    G_SBGL_CSHXX("初始化信息", 72, 2, G_SBGL){},
+    G_SBGL_QPXQ("取票详情", 73, 2, G_SBGL){},
     ;
 
 	private final String value;

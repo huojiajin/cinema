@@ -1,17 +1,18 @@
 package howard.cinema.manage.manage.acl;
 
 import howard.cinema.core.dao.dict.acl.ErrorType;
-import howard.cinema.core.dao.entity.acl.*;
-import howard.cinema.core.dao.mapper.acl.*;
+import howard.cinema.core.dao.entity.acl.Cinema;
+import howard.cinema.core.dao.entity.acl.Customer;
+import howard.cinema.core.dao.mapper.acl.CinemaMapper;
+import howard.cinema.core.dao.mapper.acl.CustomerMapper;
+import howard.cinema.core.dao.mapper.acl.RoleMapper;
 import howard.cinema.core.manage.model.CommonResponse;
 import howard.cinema.manage.manage.common.AbstractManager;
 import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaQueryModel;
-import howard.cinema.manage.model.acl.role.*;
 import howard.cinema.manage.model.common.CommonIdRequest;
 import howard.cinema.manage.model.common.CommonListReponse;
-import howard.cinema.manage.model.common.CommonPageRequest;
 import howard.cinema.manage.model.common.CommonRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
     private RoleMapper roleMapper;
 
     @Override
-    public String query(CommonPageRequest request){
+    public String query(CommonRequest request){
         CommonResponse<CommonListReponse<CinemaQueryModel>> response = new CommonResponse<>();
         CommonListReponse<CinemaQueryModel> data = new CommonListReponse<>();
         List<CinemaQueryModel> childCinemaList = findChildCinemaList(null);//最顶层影院父类ID为空
@@ -126,7 +127,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         cinemaMapper.updateStop(true, deleteRequest.getId());
         addSysLog("停用影城", deleteRequest.getToken(), deleteRequest.getId());
         response.setMessage("停用影城成功");
-        return null;
+        return response.toJson();
     }
 
     @Override
@@ -139,6 +140,6 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         cinemaMapper.updateStop(false, deleteRequest.getId());
         addSysLog("启用影城", deleteRequest.getToken(), deleteRequest.getId());
         response.setMessage("启用影城成功");
-        return null;
+        return response.toJson();
     }
 }

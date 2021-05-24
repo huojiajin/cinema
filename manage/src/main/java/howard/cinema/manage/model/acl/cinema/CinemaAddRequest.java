@@ -1,6 +1,7 @@
 package howard.cinema.manage.model.acl.cinema;
 
 import howard.cinema.core.dao.dict.acl.CinemaType;
+import howard.cinema.core.dao.dict.acl.PosType;
 import howard.cinema.manage.model.common.CommonRequest;
 
 import javax.validation.constraints.NotBlank;
@@ -23,7 +24,7 @@ public class CinemaAddRequest extends CommonRequest {
     @NotNull(message = "请选择机构类型")
     private CinemaType type;//机构类型
     @NotNull(message = "请选择POS类别")
-    private String posType;//POS类别
+    private PosType posType;//POS类别
     @NotBlank(message = "请选择所属客户")
     private String customerId;//客户ID
     private String info;//描述
@@ -62,11 +63,11 @@ public class CinemaAddRequest extends CommonRequest {
         this.type = type;
     }
 
-    public String getPosType() {
+    public PosType getPosType() {
         return posType;
     }
 
-    public void setPosType(String posType) {
+    public void setPosType(PosType posType) {
         this.posType = posType;
     }
 

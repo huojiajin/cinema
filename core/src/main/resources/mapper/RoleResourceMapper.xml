@@ -17,7 +17,7 @@
         select
         <include refid="Insert_Column"/>
         from cinema_role_resource
-        where id = #{roleId}
+        where role_id = #{roleId}
     </select>
 
     <insert id="persistAll" parameterType="list">

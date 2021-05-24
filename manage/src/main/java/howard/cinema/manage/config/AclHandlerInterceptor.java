@@ -13,8 +13,8 @@ import net.spy.memcached.MemcachedClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +29,8 @@ import java.util.stream.Collectors;
  * @author: huojiajin
  * @time: 2020/5/27 16:25
  */
-@Component
-@SuppressWarnings("unchecked")
-public class AclHandlerInterceptor implements HandlerInterceptor  {
+@Service
+public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

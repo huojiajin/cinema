@@ -1,12 +1,15 @@
 package howard.cinema.manage.acl;
 
-import com.github.pagehelper.PageInfo;
+import howard.cinema.core.dao.dict.acl.CinemaType;
+import howard.cinema.core.dao.dict.acl.PosType;
 import howard.cinema.core.manage.model.CommonResponse;
 import howard.cinema.core.manage.tools.JsonTools;
 import howard.cinema.core.manage.tools.httpclient.HttpClientHelper;
 import howard.cinema.manage.ApplicationTests;
-import howard.cinema.manage.model.acl.role.RoleAddRequest;
-import howard.cinema.manage.model.common.CommonPageRequest;
+import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
+import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
+import howard.cinema.manage.model.common.CommonIdRequest;
+import howard.cinema.manage.model.common.CommonRequest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,36 +22,16 @@ import java.io.IOException;
  */
 public class CinemaTest extends ApplicationTests {
 
-    private static final String token = "";
+    private static final String token = "93d55216dbe348e780716996275e09b3";
 
     @Test
-    public void roleQuery() throws IOException {
+    public void cinemaQuery() throws IOException {
 
-        CommonPageRequest request = new CommonPageRequest();
-        request.setPageNo(2);
-        request.setPageSize(20);
+        CommonRequest request = new CommonRequest();
         request.setToken(token);
-        request.setResourceCode(12);
-        String url = "http://localhost/manage/role/query";
-//        String url = "http://39.106.226.73/manage/role/query";
+        request.setResourceCode(11);
+        String url = "http://localhost/manage/cinema/query";
 
-        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
-        echo(responseStr);
-        CommonResponse<PageInfo> response = JsonTools.json2Object(responseStr, CommonResponse.class, PageInfo.class);
-        PageInfo page = response.getData();
-        echo(page);
-    }
-
-    @Test
-    public void roleAdd() throws IOException {
-        RoleAddRequest request = new RoleAddRequest();
-        request.setName("测试");
-        request.setToken("1a8db6051b2846fd918ae851ffb93d3e");
-        request.setInfo("测试用");
-        request.setList(1);
-        request.setResourceCode(12);
-        String url = "http://localhost/manage/role/add";
-//        String url = "http://39.106.226.73/manage/role/add";
         String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
         echo(responseStr);
         CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
@@ -56,17 +39,78 @@ public class CinemaTest extends ApplicationTests {
     }
 
     @Test
-    public void roleedit() throws IOException {
-        RoleAddRequest request = new RoleAddRequest();
-        request.setName("测试1");
-        request.setToken("1a8db6051b2846fd918ae851ffb93d3e");
-        request.setInfo("测试用");
-        request.setList(1);
-        request.setResourceCode(12);
-        String url = "http://localhost/manage/role/add";
-//        String url = "http://39.106.226.73/manage/role/add";
+    public void cinemaList() throws IOException {
+
+        CommonRequest request = new CommonRequest();
+        request.setToken(token);
+        request.setResourceCode(11);
+        String url = "http://localhost/manage/cinema/list";
+
         String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
-        echo(responseStr);
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
+
+    @Test
+    public void cinemaAdd() throws IOException {
+        CinemaAddRequest request = new CinemaAddRequest();
+        request.setToken(token);
+        request.setResourceCode(11);
+        request.setParentId("123456");
+        request.setName("测试");
+        request.setCode("000001");
+        request.setType(CinemaType.CINEMA);
+        request.setPosType(PosType.DINGXIN);
+        request.setCustomerId("123456");
+        request.setList(0);
+        String url = "http://localhost/manage/cinema/add";
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
+
+    @Test
+    public void cinemaEdit() throws IOException {
+        CinemaEditRequest request = new CinemaEditRequest();
+        request.setToken(token);
+        request.setResourceCode(11);
+        request.setId("4a1b696e5d0c41dc9a9d14dae1d41481");
+        request.setParentId("123456");
+        request.setName("测试123");
+        request.setCode("0000001");
+        request.setType(CinemaType.CINEMA);
+        request.setPosType(PosType.DINGXIN);
+        request.setCustomerId("123456");
+        request.setInfo("测试修改");
+        request.setList(1);
+        String url = "http://localhost/manage/cinema/edit";
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
+
+    @Test
+    public void disable() throws Exception{
+        CommonIdRequest request = new CommonIdRequest();
+        request.setToken(token);
+        request.setResourceCode(11);
+        request.setId("4a1b696e5d0c41dc9a9d14dae1d41481");
+
+        String url = "http://localhost/manage/cinema/disable";
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
+
+    @Test
+    public void enable() throws Exception{
+        CommonIdRequest request = new CommonIdRequest();
+        request.setToken(token);
+        request.setResourceCode(11);
+        request.setId("4a1b696e5d0c41dc9a9d14dae1d41481");
+
+        String url = "http://localhost/manage/cinema/enable";
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
         CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
         echo(response);
     }

@@ -44,7 +44,12 @@
         select
         <include refid="Insert_Column"></include>
         from cinema
-        where parent_id = #{parentId} order by list
+        where
+        <choose>
+            <when test="parentId == null || parentId == ''">parent_id is null</when>
+            <otherwise>parent_id = #{parentId}</otherwise>
+        </choose>
+        order by list
     </select>
 
     <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.Cinema">
@@ -81,14 +86,16 @@
         <if test="list != null and list != ''">
             list = #{list},
         </if>
-        <if test="updateTime != null and updateTime != ''">
+        <if test="updateTime != null">
             update_time = #{updateTime}
         </if>
         where id = #{id}
     </update>
 
     <update id="updateStop">
-        update cinema set has_delete = #{hasDelete} where id = #{id}
+        update cinema
+        set has_delete = #{hasDelete}
+        where id = #{id}
     </update>
 
     <select id="findByName" resultMap="ResultMap" parameterType="String">

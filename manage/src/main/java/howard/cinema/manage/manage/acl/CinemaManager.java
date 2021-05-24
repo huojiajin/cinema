@@ -23,7 +23,7 @@ public interface CinemaManager {
      * @para: [request]
      * @return: java.lang.String
     **/
-    String query(CommonPageRequest request);
+    String query(CommonRequest request);
 
     /**
      * @name: list

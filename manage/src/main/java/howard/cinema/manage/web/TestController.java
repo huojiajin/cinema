@@ -1,6 +1,5 @@
 package howard.cinema.manage.web;
 
-import net.spy.memcached.MemcachedClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @name: TestController
@@ -52,7 +48,7 @@ public class TestController {
                     RequestMapping annotation2 = method.getAnnotation(RequestMapping.class);
                     if (annotation2 != null) {
                         url_path += annotation2.value()[0];
-                        System.out.println("方法路径:" + url_path + ";方法名:" + method.getName() + ";");
+                        System.out.println("方法路径:" + url_path + ";方法名:" + method.getName());
                     }
                     url_path = value[0];
                 }
@@ -61,7 +57,7 @@ public class TestController {
                     PostMapping annotation2 = method.getAnnotation(PostMapping.class);
                     if (annotation2 != null) {
                         url_path += annotation2.value()[0];
-                        System.out.println("方法路径" + url_path + "方法名" + method.getName());
+                        System.out.println("方法路径:" + url_path + ";方法名:" + method.getName());
                     }
                     url_path = value[0];
                 }
