@@ -51,7 +51,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
     @Override
     public String query(CommonPageRequest request){
-        CommonResponse response = new CommonResponse();
+        CommonResponse<PageInfo> response = new CommonResponse<PageInfo>();
 
         PageHelper.startPage(request.getPageNo(), request.getPageSize());
         List<User> userList = userMapper.findAll();
@@ -85,7 +85,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
             response.setError(ErrorType.USEREXISTS);
         }
         Role role = roleMapper.findById(addRequest.getRoleId());
-        if (role == null || role.isStop()){
+        if (role == null || role.isHasDelete()){
             return response.setError(ErrorType.VALID, "角色不存在或已被删除");
         }
         User user = new User();

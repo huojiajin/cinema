@@ -2,6 +2,7 @@ package howard.cinema.core.dao.entity.acl;
 
 import howard.cinema.core.dao.dict.acl.ResourceType;
 import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
+import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
 import howard.cinema.core.dao.entity.common.StringUUIDEntity;
 
 /**

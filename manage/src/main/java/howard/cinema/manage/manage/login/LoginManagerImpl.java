@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * @time: 2020/5/27 15:52
  */
 @Service
-public class LoginManagerImpl extends CommonAbstract implements LoginManager{
+public class LoginManagerImpl extends CommonAbstract implements LoginManager {
 
     @Autowired
     private MemcachedClient memcachedClient;
@@ -49,9 +49,9 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager{
     private CinemaMapper cinemaMapper;
 
     @Override
-    public String getVerifyImage(){
+    public String getVerifyImage() {
 
-        CommonResponse response = new CommonResponse();
+        CommonResponse<VerifyResponse> response = new CommonResponse<>();
 
         VerifyImage verifyImage = new VerifyImage();
         verifyImage.generate();
@@ -69,26 +69,26 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager{
     }
 
     @Override
-    public String login(LoginRequest loginRequest){
+    public String login(LoginRequest loginRequest) {
 
-        CommonResponse response = new CommonResponse();
+        CommonResponse<LoginResponse> response = new CommonResponse<>();
         //校验验证码
-        String verifyCode = (String)memcachedClient.get(MyMecachedPrefix.loginVerifyImagePrefix + loginRequest.getVerifyId());
-        if (!hasText(verifyCode)){
+        String verifyCode = (String) memcachedClient.get(MyMecachedPrefix.loginVerifyImagePrefix + loginRequest.getVerifyId());
+        if (hasText(verifyCode)) {
             if (!toUpper(loginRequest.getVerifyCode()).equals(toUpper(verifyCode))) {
                 return response.setError(ErrorType.VERIFY);
-            }else{
-                response.setSuccess(false);
-                response.setErrCode(ErrorType.VERIFY.getErrCode());
-                response.setMessage("验证码已超时");
-                return response.toJson();
             }
+        } else {
+            response.setSuccess(false);
+            response.setErrCode(ErrorType.VERIFY.getErrCode());
+            response.setMessage("验证码已超时");
+            return response.toJson();
         }
         //校验用户名
         User user = userManager.findByLoginName(loginRequest.getLoginName());
-        if (user == null){
+        if (user == null) {
             return response.setError(ErrorType.LOGIN);
-        }else if(user.getStatus() == User.UserStatus.INVALID){
+        } else if (user.getStatus() == User.UserStatus.INVALID) {
             response.setSuccess(false);
             response.setErrCode(ErrorType.LOGIN.getErrCode());
             response.setMessage("用户已停用");
@@ -97,7 +97,7 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager{
         //校验密码
         byte[] hashBytes = SecurityUtil.hash(loginRequest.getPassword().getBytes(), SecurityUtil.HashType.MD5);
         String requestPassword = new BigInteger(1, hashBytes).toString(16);
-        if (!requestPassword.equals(user.getPassword())){
+        if (!requestPassword.equals(user.getPassword())) {
             return response.setError(ErrorType.LOGIN);
         }
         //存放登陆信息
@@ -135,7 +135,7 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager{
         return resourceModel;
     }
 
-    private String toUpper(String str){
+    private String toUpper(String str) {
         char[] c = str.toCharArray();// 把字符串转化为字符数组
 
         for (int i = 0; i < c.length; i++) {// 循环字符数组
@@ -143,7 +143,7 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager{
             if (Character.isUpperCase(c[i])) {// 判断是否是大写，如果是大写的就转化为小写。
                 // 把c[i]转化为int型，加32后在转化为char型，重新赋值给c[i];
                 c[i] = (char) ((int) c[i] + 32);
-            }else if (Character.isDigit(c[i])) {// 判断是否是数字
+            } else if (Character.isDigit(c[i])) {// 判断是否是数字
                 c[i] = c[i];
             }
         }

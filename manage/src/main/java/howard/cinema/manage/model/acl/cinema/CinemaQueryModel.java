@@ -1,34 +1,36 @@
-package howard.cinema.core.dao.entity.acl;
+package howard.cinema.manage.model.acl.cinema;
 
 import howard.cinema.core.dao.dict.acl.CinemaType;
 import howard.cinema.core.dao.dict.acl.PosType;
-import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
+import howard.cinema.core.dao.entity.common.BaseEntity;
+
+import java.util.List;
 
 /**
- * @ClassName: Cinema
- * @Description: 影城实体
- * @Author HuoJiaJin
- * @Date 2021/5/24 0:44
- * @Version 1.0
- **/
-public class Cinema extends AbstractUpdateTimeEntity {
+ * @name: CinemaQueryResponse
+ * @description: 查询影城返回Response
+ * @author: huojiajin
+ * @time: 2021/5/24 14:32
+ */
+public class CinemaQueryModel extends BaseEntity {
 
-    private String parentId;//上级影城ID
+    private String id;//影城id
     private String name;//影城名称
     private String code;//机构编码
     private CinemaType type;//机构类型
     private PosType posType;//POS类别
-    private String customerId;//客户ID
+    private String customerName;//客户
     private String info;//描述
     private int list;//排序
-    private boolean hasDelete = false;//是否停用
+    private boolean hasUse;//是否在用
+    private List<CinemaQueryModel> result;//下级影院列表
 
-    public String getParentId() {
-        return parentId;
+    public String getId() {
+        return id;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -63,12 +65,12 @@ public class Cinema extends AbstractUpdateTimeEntity {
         this.posType = posType;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getInfo() {
@@ -87,11 +89,19 @@ public class Cinema extends AbstractUpdateTimeEntity {
         this.list = list;
     }
 
-    public boolean isHasDelete() {
-        return hasDelete;
+    public boolean isHasUse() {
+        return hasUse;
     }
 
-    public void setHasDelete(boolean hasDelete) {
-        this.hasDelete = hasDelete;
+    public void setHasUse(boolean hasUse) {
+        this.hasUse = hasUse;
+    }
+
+    public List<CinemaQueryModel> getResult() {
+        return result;
+    }
+
+    public void setResult(List<CinemaQueryModel> result) {
+        this.result = result;
     }
 }

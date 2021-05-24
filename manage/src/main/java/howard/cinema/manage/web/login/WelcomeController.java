@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * @name: WelcomeController
  * @description: 登陆Controller
@@ -28,7 +30,7 @@ public class WelcomeController extends MyBaseController {
     }
 
     @PostMapping(value = "/login")
-    public String login(@RequestBody LoginRequest loginRequest){
+    public String login(@Valid @RequestBody LoginRequest loginRequest){
         return loginManager.login(loginRequest);
     }
 }

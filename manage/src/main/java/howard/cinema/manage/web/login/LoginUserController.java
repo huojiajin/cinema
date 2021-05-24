@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * @name: LoginUserController
  * @description: 登陆用户相关操作Controller
@@ -23,12 +25,12 @@ public class LoginUserController {
     private LoginUserManager manager;
 
     @PostMapping("/pwedit")
-    public String passwordEdit(@RequestBody UserPasswordEditRequest request){
+    public String passwordEdit(@Valid @RequestBody UserPasswordEditRequest request){
         return  manager.passwordEdit(request);
     }
 
     @PostMapping("/loginout")
-    public String loginout(@RequestBody CommonRequest request){
+    public String loginout(@Valid @RequestBody CommonRequest request){
         return  manager.loginout(request);
     }
 }

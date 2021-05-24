@@ -18,4 +18,10 @@
         <include refid="Insert_Column"/>
         from cinema_customer
     </select>
+
+    <select id="findById" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_customer where id = #{id}
+    </select>
 </mapper>

@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
 public class MyFilterConfig {
 
     @Bean
-    public FilterRegistrationBean Filters() {
+    public FilterRegistrationBean<MyFilter> Filters() {
 
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        FilterRegistrationBean<MyFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new MyFilter());
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("MyFilter");

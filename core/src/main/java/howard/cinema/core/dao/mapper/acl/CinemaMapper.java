@@ -1,7 +1,9 @@
 package howard.cinema.core.dao.mapper.acl;
 
 import howard.cinema.core.dao.entity.acl.Cinema;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  *@Date 2021/5/24 0:47
  *@Version 1.0
  **/
-@Repository
+@Component
 public interface CinemaMapper {
 
     /**
@@ -35,6 +37,16 @@ public interface CinemaMapper {
      * @Return java.util.List<howard.cinema.core.dao.entity.acl.Cinema>
      **/
     List<Cinema> findAll();
+
+    /**
+     * @Name listUse
+     * @Author HuoJiaJin
+     * @Description 查询在用的影城
+     * @Date 2021/5/24 0:49
+     * @Param []
+     * @Return java.util.List<howard.cinema.core.dao.entity.acl.Cinema>
+     **/
+    List<Cinema> listUse();
 
     /**
      * @Name findByParentId
@@ -74,5 +86,14 @@ public interface CinemaMapper {
      * @Param [stop]
      * @Return void
      **/
-    void updateStop(@Param("stop") boolean stop, @Param("id") String id);
+    void updateStop(@Param("hasDelete") boolean hasDelete, @Param("id") String id);
+
+    /**
+     * @name: findByName
+     * @description: 根据名称查询
+     * @author: huojiajin
+     * @para: [name]
+     * @return: howard.cinema.core.dao.entity.acl.Cinema
+    **/
+    Cinema findByName(@Param("name")String name);
 }

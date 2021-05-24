@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class AbstractInsertTimeEntity extends StringUUIDEntity {
 
     private LocalDateTime insertTime = LocalDateTime.now();//插入时间
-    private LocalDateTime updateTime;//更新时间
 
     public LocalDateTime getInsertTime() {
         return insertTime;
@@ -19,13 +18,5 @@ public class AbstractInsertTimeEntity extends StringUUIDEntity {
 
     public void setInsertTime(LocalDateTime insertTime) {
         this.insertTime = insertTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 }

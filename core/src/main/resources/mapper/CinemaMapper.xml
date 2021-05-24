@@ -14,11 +14,11 @@
         <result column="customer_id" property="customerId"/>
         <result column="info" property="info"/>
         <result column="list" property="list"/>
-        <result column="stop" property="stop"/>
+        <result column="has_delete" property="hasDelete"/>
     </resultMap>
 
     <sql id="Insert_Column">
-        id,insert_time,update_time,parent_id,name,code,type,pos_type,cinema_id,info,list,stop
+        id,insert_time,update_time,parent_id,name,code,type,pos_type,customer_id,info,list,has_delete
     </sql>
 
     <select id="findById" resultMap="ResultMap" parameterType="String">
@@ -34,18 +34,24 @@
         from cinema order by list
     </select>
 
+    <select id="listUse" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema where has_delete = false order by list
+    </select>
+
     <select id="findByParentId" resultMap="ResultMap" parameterType="String">
         select
         <include refid="Insert_Column"></include>
         from cinema
-        where parent_id = #{parentId}
+        where parent_id = #{parentId} order by list
     </select>
 
     <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.Cinema">
         insert into cinema (
         <include refid="Insert_Column"/>
         ) values (
-        #{id},#{insert_time},#{update_time},#{parent_id},#{name},#{code},#{type},#{pos_type},#{cinema_id},#{info},#{list},#{stop}
+        #{id},#{insertTime},#{updateTime},#{parentId},#{name},#{code},#{type},#{posType},#{customerId},#{info},#{list},#{hasDelete}
         )
     </insert>
 
@@ -82,6 +88,13 @@
     </update>
 
     <update id="updateStop">
-        update cinema set stop = #{stop} where id = #{id}
+        update cinema set has_delete = #{hasDelete} where id = #{id}
     </update>
+
+    <select id="findByName" resultMap="ResultMap" parameterType="String">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema
+        where name = #{name}
+    </select>
 </mapper>

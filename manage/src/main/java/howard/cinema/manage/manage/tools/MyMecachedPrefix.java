@@ -8,9 +8,9 @@ package howard.cinema.manage.manage.tools;
  */
 public class MyMecachedPrefix {
 
-    public static final String loginTokenPrefix = "login:token:";
+    public static final String loginTokenPrefix = "cinema:login:token:";
 
-    public static final String loginResourcePrefix = "login:resource:";
+    public static final String loginResourcePrefix = "cinema:login:resource:";
 
-    public static final String loginVerifyImagePrefix = "login:image:";
+    public static final String loginVerifyImagePrefix = "cinema:login:image:";
 }

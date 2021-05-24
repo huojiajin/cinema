@@ -1,27 +1,34 @@
-package howard.cinema.core.dao.entity.acl;
+package howard.cinema.manage.model.acl.cinema;
 
 import howard.cinema.core.dao.dict.acl.CinemaType;
-import howard.cinema.core.dao.dict.acl.PosType;
-import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
+import howard.cinema.manage.model.common.CommonRequest;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
- * @ClassName: Cinema
- * @Description: 影城实体
- * @Author HuoJiaJin
- * @Date 2021/5/24 0:44
- * @Version 1.0
- **/
-public class Cinema extends AbstractUpdateTimeEntity {
+ * @name: CinemaAddRequest
+ * @description: 添加影城Request
+ * @author: huojiajin
+ * @time: 2021/5/24 14:53
+ */
+public class CinemaAddRequest extends CommonRequest {
 
+    @NotBlank(message = "请选择上级影城")
     private String parentId;//上级影城ID
+    @NotBlank(message = "请填写影城名称")
     private String name;//影城名称
+    @NotBlank(message = "请填写影城编码")
     private String code;//机构编码
+    @NotNull(message = "请选择机构类型")
     private CinemaType type;//机构类型
-    private PosType posType;//POS类别
+    @NotNull(message = "请选择POS类别")
+    private String posType;//POS类别
+    @NotBlank(message = "请选择所属客户")
     private String customerId;//客户ID
     private String info;//描述
-    private int list;//排序
-    private boolean hasDelete = false;//是否停用
+    @NotNull(message = "请填写排序")
+    private Integer list;//排序
 
     public String getParentId() {
         return parentId;
@@ -55,11 +62,11 @@ public class Cinema extends AbstractUpdateTimeEntity {
         this.type = type;
     }
 
-    public PosType getPosType() {
+    public String getPosType() {
         return posType;
     }
 
-    public void setPosType(PosType posType) {
+    public void setPosType(String posType) {
         this.posType = posType;
     }
 
@@ -79,19 +86,11 @@ public class Cinema extends AbstractUpdateTimeEntity {
         this.info = info;
     }
 
-    public int getList() {
+    public Integer getList() {
         return list;
     }
 
-    public void setList(int list) {
+    public void setList(Integer list) {
         this.list = list;
-    }
-
-    public boolean isHasDelete() {
-        return hasDelete;
-    }
-
-    public void setHasDelete(boolean hasDelete) {
-        this.hasDelete = hasDelete;
     }
 }

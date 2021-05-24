@@ -2,11 +2,16 @@ package howard.cinema.manage;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @SpringBootApplication
-@MapperScan(basePackages = "howard.cinema.core.dao.mapper", annotationClass = Repository.class)
+@ServletComponentScan
+@MapperScan(value = "howard.cinema.core.dao.mapper", annotationClass = Component.class)
 public class ManageApplication {
 
     public static void main(String[] args) {

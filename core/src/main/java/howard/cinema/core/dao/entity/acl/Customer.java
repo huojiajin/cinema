@@ -1,6 +1,7 @@
 package howard.cinema.core.dao.entity.acl;
 
 import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
+import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
 
 /**
  * @ClassName: Customer

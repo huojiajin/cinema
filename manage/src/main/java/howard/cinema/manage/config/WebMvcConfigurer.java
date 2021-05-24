@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -22,16 +23,13 @@ import java.util.List;
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurationSupport {
 
-    @Autowired
-    private AclHandlerInterceptor aclInterceptor;
-
     /**
      * 覆盖父类方法注册拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry)
     {
-        registry.addInterceptor(aclInterceptor);// 访问控制
+        registry.addInterceptor(new AclHandlerInterceptor());// 访问控制
     }
 
     /**

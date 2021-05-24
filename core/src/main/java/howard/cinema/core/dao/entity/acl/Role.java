@@ -1,6 +1,6 @@
 package howard.cinema.core.dao.entity.acl;
 
-import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
+import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
 
 /**
  * @name: Role
@@ -8,13 +8,13 @@ import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
  * @author: huojiajin
  * @time: 2020/5/25 15:38
  */
-public class Role extends AbstractInsertTimeEntity {
+public class Role extends AbstractUpdateTimeEntity {
 
     private String name;// 角色名称
     private String cinemaId;//影城id
     private String info;// 描述
     private Integer list;// 排序
-    private boolean stop = false;//是否删除
+    private boolean hasDelete = false;//是否删除
 
     public String getName() {
         return name;
@@ -48,11 +48,11 @@ public class Role extends AbstractInsertTimeEntity {
         this.list = list;
     }
 
-    public boolean isStop() {
-        return stop;
+    public boolean isHasDelete() {
+        return hasDelete;
     }
 
-    public void setStop(boolean stop) {
-        this.stop = stop;
+    public void setHasDelete(boolean hasDelete) {
+        this.hasDelete = hasDelete;
     }
 }

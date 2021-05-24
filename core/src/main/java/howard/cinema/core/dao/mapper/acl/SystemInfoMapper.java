@@ -1,6 +1,7 @@
 package howard.cinema.core.dao.mapper.acl;
 
 import howard.cinema.core.dao.entity.acl.SystemInfo;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
  *@Date 2021/5/23 21:27
  *@Version 1.0
  **/
-@Repository
+@Component
 public interface SystemInfoMapper {
 
     /**

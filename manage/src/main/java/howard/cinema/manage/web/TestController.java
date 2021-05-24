@@ -3,10 +3,13 @@ package howard.cinema.manage.web;
 import net.spy.memcached.MemcachedClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,19 +25,48 @@ public class TestController {
 
     @Value("${spring.application.name}")
     private String name;
-
     @Autowired
-    private MemcachedClient memcacheClient;
+    private ConfigurableApplicationContext run;
 
     @RequestMapping(value = "/health",method = {RequestMethod.GET,RequestMethod.HEAD})
     public String heathTest(){
-        String adress="unknow";
-        try {
-            adress= InetAddress.getLocalHost()+"";
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        //获取restcontroller注解的类名
+        String[] beanNamesForAnnotation = run.getBeanNamesForAnnotation(RestController.class);
+
+        //获取类对象
+        for (String str : beanNamesForAnnotation) {
+            Object bean = run.getBean(str);
+            Class<?> forName = bean.getClass();
+            System.out.println(forName.getName());
+
+            //获取requestmapping注解的类
+            RequestMapping declaredAnnotation = forName.getAnnotation(RequestMapping.class);
+
+            String url_path = "";
+            if (declaredAnnotation != null) {
+                String[] value = (declaredAnnotation.value());
+                //获取类的url路径
+                url_path = value[0];
+                for (Method method : forName.getDeclaredMethods()) {
+                    RequestMapping annotation2 = method.getAnnotation(RequestMapping.class);
+                    if (annotation2 != null) {
+                        url_path += annotation2.value()[0];
+                        System.out.println("方法路径:" + url_path + ";方法名:" + method.getName() + ";");
+                    }
+                    url_path = value[0];
+                }
+
+                for (Method method : forName.getDeclaredMethods()) {
+                    PostMapping annotation2 = method.getAnnotation(PostMapping.class);
+                    if (annotation2 != null) {
+                        url_path += annotation2.value()[0];
+                        System.out.println("方法路径" + url_path + "方法名" + method.getName());
+                    }
+                    url_path = value[0];
+                }
+            }
         }
-        return "I'm "+name+",the time is "
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm:ss"))+", and my adress is " + adress;
+        return "已打印所有链接";
     }
 }

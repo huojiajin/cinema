@@ -17,6 +17,7 @@ import howard.cinema.core.manage.model.CommonResponse;
 import howard.cinema.manage.manage.common.AbstractManager;
 import howard.cinema.manage.model.acl.role.*;
 import howard.cinema.manage.model.common.CommonIdRequest;
+import howard.cinema.manage.model.common.CommonListReponse;
 import howard.cinema.manage.model.common.CommonPageRequest;
 import howard.cinema.manage.model.common.CommonRequest;
 import org.springframework.beans.BeanUtils;
@@ -48,7 +49,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
 
     @Override
     public String query(CommonPageRequest request){
-        CommonResponse response = new CommonResponse();
+        CommonResponse<PageInfo> response = new CommonResponse<>();
         PageHelper.startPage(request.getPageNo(), request.getPageSize());
         List<Role> roleList = roleMapper.findAll();
         PageInfo<Role> page = new PageInfo<>(roleList);
@@ -57,7 +58,9 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
             RoleModel model = new RoleModel();
             BeanUtils.copyProperties(r, model);
             Cinema cinema = cinemaMapper.findById(r.getCinemaId());
-            model.setCinemaName(cinema.getName());
+            if (cinema != null) {
+                model.setCinemaName(cinema.getName());
+            }
             return model;
         }).collect(Collectors.toList()));
         response.setData(page);
@@ -66,10 +69,10 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
 
     @Override
     public String list(CommonRequest request){
-        CommonResponse response = new CommonResponse();
+        CommonResponse<CommonListReponse> response = new CommonResponse<>();
         List<Role> list = roleMapper.findAll();
-        RoleListResponse data = new RoleListResponse();
-        data.setRoleList(list);
+        CommonListReponse<Role> data = new CommonListReponse<>();
+        data.setResult(list);
         response.setData(data);
         return response.toJson();
     }
@@ -165,21 +168,21 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
     }
 
     @Transactional(rollbackFor=Exception.class)
-    private void roleResourceUpdate(String roleId, List<RoleResource> roleResourceList){
+    public void roleResourceUpdate(String roleId, List<RoleResource> roleResourceList){
         roleResourceMapper.deleteByRoleId(roleId);
         roleResourceMapper.persistAll(roleResourceList);
     }
 
     @Override
     public String resourceList(CommonIdRequest request){
-        CommonResponse response = new CommonResponse();
-        RoleResourceListResponse listResponse = new RoleResourceListResponse();
+        CommonResponse<CommonListReponse> response = new CommonResponse<>();
+        CommonListReponse<Integer> data = new CommonListReponse<>();
         List<RoleResource> roleResources = roleResourceMapper.listByRoleId(request.getId());
         if (!isEmpty(roleResources)){
             List<Integer> codeList = roleResources.stream().map(r -> r.getResourceType().getCode()).collect(Collectors.toList());
-            listResponse.setResourceCodeList(codeList);
+            data.setResult(codeList);
         }
-        response.setData(listResponse);
+        response.setData(data);
         return response.toJson();
     }
 }

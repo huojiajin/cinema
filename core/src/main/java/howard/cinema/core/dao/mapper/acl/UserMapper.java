@@ -2,6 +2,7 @@ package howard.cinema.core.dao.mapper.acl;
 
 import howard.cinema.core.dao.entity.acl.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import java.util.List;
  *@Date 2021/5/23 23:24
  *@Version 1.0
  **/
-@Repository
+@Component
 public interface UserMapper {
 
     /**

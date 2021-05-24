@@ -2,6 +2,7 @@ package howard.cinema.core.manage.model;
 
 import howard.cinema.core.dao.dict.acl.ErrorType;
 import howard.cinema.core.dao.entity.common.BaseEntity;
+import org.apache.poi.ss.formula.functions.T;
 
 /**
  * @name: CommonResponse

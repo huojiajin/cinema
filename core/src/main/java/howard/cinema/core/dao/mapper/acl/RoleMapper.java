@@ -1,7 +1,9 @@
 package howard.cinema.core.dao.mapper.acl;
 
 import howard.cinema.core.dao.entity.acl.Role;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * @Date 2021/5/23 3:09
  * @Version 1.0
  **/
-@Repository
+@Component
 public interface RoleMapper {
 
     /**
@@ -85,4 +87,13 @@ public interface RoleMapper {
      * @Return void
      **/
     void updateDelete(@Param("id")String id);
+
+    /**
+     * @name: listByCinemaId
+     * @description: 根据影城ID查询角色
+     * @author: huojiajin
+     * @para: [cinemaId]
+     * @return: java.util.List<howard.cinema.core.dao.entity.acl.Role>
+    **/
+    List<Role> listByCinemaId(@Param("cinemaId")String cinemaId);
 }

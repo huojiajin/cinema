@@ -8,17 +8,14 @@
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
         <result column="role_id" property="roleId"/>
-        <result column="role_name" property="roleName"/>
         <result column="name" property="name"/>
         <result column="mobile" property="mobile"/>
-        <result column="cinema_id" property="cinemaId"/>
-        <result column="cinema_name" property="cinemaName"/>
         <result column="login_name" property="loginName"/>
         <result column="password" property="password"/>
     </resultMap>
 
     <sql id="Insert_Column">
-        id,insert_time,update_time,status,role_id,role_name,name,mobile,cinema_id,cinema_name,login_name,password
+        id,insert_time,update_time,status,role_id,name,mobile,login_name,password
     </sql>
 
     <select id="findAll" resultMap="ResultMap">
@@ -38,7 +35,7 @@
         insert into cinema_user (
         <include refid="Insert_Column"/>
         ) values (
-        #{id},#{insertTime},#{updateTime},#{status},#{roleId},#{roleName},#{name},#{mobile},#{cinemaId},#{cinemaName},#{loginName},#{password}
+        #{id},#{insertTime},#{updateTime},#{status},#{roleId},#{name},#{mobile},#{loginName},#{password}
         )
     </insert>
 
@@ -47,20 +44,11 @@
         <if test="roleId != null and roleId != ''">
             role_id = #{roleId},
         </if>
-        <if test="roleName != null and roleName != ''">
-            role_name = #{roleName},
-        </if>
         <if test="name != null and name != ''">
             name = #{name},
         </if>
         <if test="mobile != null and mobile != ''">
             mobile = #{mobile},
-        </if>
-        <if test="cinemaId != null and cinemaId != ''">
-            cinema_id = #{cinemaId},
-        </if>
-        <if test="cinemaName != null and cinemaName != ''">
-            cinema_name = #{cinemaName},
         </if>
         <if test="updateTime != null and updateTime != ''">
             update_time = #{updateTime}

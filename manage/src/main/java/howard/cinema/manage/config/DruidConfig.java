@@ -1,6 +1,7 @@
 package howard.cinema.manage.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EntityScan(basePackages = {"howard.cinema.core.dao.entity"})
-@EnableTransactionManagement
+@EnableTransactionManagement(mode = AdviceMode.ASPECTJ, proxyTargetClass = true)
 public class DruidConfig {
 
 

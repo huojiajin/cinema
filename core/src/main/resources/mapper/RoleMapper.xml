@@ -10,11 +10,11 @@
         <result column="cinema_id" property="cinemaId"/>
         <result column="info" property="info"/>
         <result column="list" property="list"/>
-        <result column="stop" property="stop"/>
+        <result column="has_delete" property="hasDelete"/>
     </resultMap>
 
     <sql id="Insert_Column">
-        id,insert_time,update_time,name,cinema_id,info,list,stop
+        id,insert_time,update_time,name,cinema_id,info,list,has_delete
     </sql>
 
     <select id="findById" resultMap="ResultMap" parameterType="String">
@@ -34,7 +34,7 @@
         insert into cinema_role (
         <include refid="Insert_Column"/>
         ) values (
-        #{id},#{insertTime},#{updateTime},#{name},#{cinemaId},#{info},#{list},#{stop}
+        #{id},#{insertTime},#{updateTime},#{name},#{cinemaId},#{info},#{list},#{hasDelete}
         )
     </insert>
 
@@ -43,7 +43,7 @@
         <include refid="Insert_Column"/>
         ) values
         <foreach collection="list" item="role" separator=",">
-            (#{role.id},#{role.insertTime},#{role.updateTime},#{role.name},#{role.cinemaId},#{role.info},#{role.list},#{role.stop})
+            (#{role.id},#{role.insertTime},#{role.updateTime},#{role.name},#{role.cinemaId},#{role.info},#{role.list},#{role.hasDelete})
         </foreach>
     </insert>
 
@@ -75,6 +75,12 @@
     </select>
 
     <update id="updateDelete" parameterType="String">
-        update cinema_role set stop = true where id = #{id}
+        update cinema_role set has_delete = true where id = #{id}
     </update>
+
+    <select id="listByCinemaId" resultMap="ResultMap" parameterType="String">
+        select
+        <include refid="Insert_Column"></include>
+        from cinema_role where cinema_id = #{cinemaId} order by list
+    </select>
 </mapper>

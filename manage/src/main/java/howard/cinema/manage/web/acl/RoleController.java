@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * @name: RoleController
@@ -30,38 +31,38 @@ public class RoleController extends MyBaseController {
     private RoleManager roleManager;
 
     @PostMapping("/query")
-    public String query(@RequestBody CommonPageRequest pageRequest, HttpServletRequest request){
+    public String query(@Valid @RequestBody CommonPageRequest pageRequest, HttpServletRequest request){
         return roleManager.query(pageRequest);
     }
 
     @PostMapping("/list")
-    public String query(@RequestBody CommonRequest request){
+    public String query(@Valid @RequestBody CommonRequest request){
         return roleManager.list(request);
     }
 
     @PostMapping("/add")
-    public String add(@RequestBody RoleAddRequest addRequest){
+    public String add(@Valid @RequestBody RoleAddRequest addRequest){
         return roleManager.add(addRequest);
     }
 
     @PostMapping("/edit")
-    public String edit(@RequestBody RoleEditRequest editRequest){
+    public String edit(@Valid @RequestBody RoleEditRequest editRequest){
 
         return roleManager.update(editRequest);
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestBody CommonIdRequest deleteRequest){
+    public String delete(@Valid @RequestBody CommonIdRequest deleteRequest){
         return roleManager.delete(deleteRequest);
     }
 
     @PostMapping("/resource/config")
-    public String resourceConfig(@RequestBody RoleResourceRequest resourceRequest){
+    public String resourceConfig(@Valid @RequestBody RoleResourceRequest resourceRequest){
         return roleManager.resourceConfig(resourceRequest);
     }
 
     @PostMapping("/resource/list")
-    public String resourceList(@RequestBody CommonIdRequest request){
+    public String resourceList(@Valid @RequestBody CommonIdRequest request){
         return roleManager.resourceList(request);
     }
 }

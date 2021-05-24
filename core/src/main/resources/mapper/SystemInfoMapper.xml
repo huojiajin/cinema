@@ -16,7 +16,7 @@
 
     <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.SystemInfo">
         insert into cinema_system_info (
-        <include refid="insert_column"></include>
+        <include refid="Insert_Column"></include>
         ) values (#{id},#{userId},#{info},#{insertTime},#{eigenValue})
     </insert>
 </mapper>

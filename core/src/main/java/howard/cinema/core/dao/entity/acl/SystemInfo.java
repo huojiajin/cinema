@@ -1,5 +1,6 @@
 package howard.cinema.core.dao.entity.acl;
 
+import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
 import howard.cinema.core.dao.entity.common.StringUUIDEntity;
 
 import java.time.LocalDateTime;
@@ -10,11 +11,10 @@ import java.time.LocalDateTime;
  * @author: huojiajin
  * @time: 2020/5/27 10:48
  */
-public class SystemInfo extends StringUUIDEntity {
+public class SystemInfo extends AbstractInsertTimeEntity {
 
     private String userId;//操作用户
     private String info;//操作详情
-    private LocalDateTime insertTime;//操作时间
     private String eigenValue;//特征值
 
     public String getUserId() {
@@ -31,14 +31,6 @@ public class SystemInfo extends StringUUIDEntity {
 
     public void setInfo(String info) {
         this.info = info;
-    }
-
-    public LocalDateTime getInsertTime() {
-        return insertTime;
-    }
-
-    public void setInsertTime(LocalDateTime insertTime) {
-        this.insertTime = insertTime;
     }
 
     public String getEigenValue() {

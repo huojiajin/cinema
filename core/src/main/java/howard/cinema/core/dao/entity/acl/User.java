@@ -1,6 +1,7 @@
 package howard.cinema.core.dao.entity.acl;
 
 import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
+import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
 
 /**
  * @name: User
@@ -8,7 +9,7 @@ import howard.cinema.core.dao.entity.common.AbstractInsertTimeEntity;
  * @author: huojiajin
  * @time: 2020/5/25 15:14
  */
-public class User extends AbstractInsertTimeEntity {
+public class User extends AbstractUpdateTimeEntity {
 
     private UserStatus status = UserStatus.NORMAL;// 状态
     private String roleId;// 用户所属角色Id
@@ -66,6 +67,10 @@ public class User extends AbstractInsertTimeEntity {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getLoginName() {
+        return loginName;
     }
 
     public void setLoginName(String loginName) {

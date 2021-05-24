@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * @name: UserController
  * @description: 用户Controller
@@ -26,27 +28,27 @@ public class UserController extends BaseEntity {
     private UserManager userManager;
 
     @PostMapping("/query")
-    public String query(@RequestBody CommonPageRequest request){
+    public String query(@Valid @RequestBody CommonPageRequest request){
         return userManager.query(request);
     }
 
     @PostMapping("/add")
-    public String add(@RequestBody UserAddRequest addRequest){
+    public String add(@Valid @RequestBody UserAddRequest addRequest){
         return userManager.add(addRequest);
     }
 
     @PostMapping("/edit")
-    public String edit(@RequestBody UserEditRequest editRequest){
+    public String edit(@Valid @RequestBody UserEditRequest editRequest){
         return userManager.update(editRequest);
     }
 
     @PostMapping("/stop")
-    public String stop(@RequestBody CommonIdRequest deleteRequest){
+    public String stop(@Valid @RequestBody CommonIdRequest deleteRequest){
         return userManager.stop(deleteRequest);
     }
 
     @PostMapping("/start")
-    public String start(@RequestBody CommonIdRequest startRequest){
+    public String start(@Valid @RequestBody CommonIdRequest startRequest){
         return userManager.start(startRequest);
     }
 }
