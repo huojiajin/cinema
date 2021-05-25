@@ -1,8 +1,9 @@
 package howard.cinema.manage.web.login;
 
 import howard.cinema.manage.manage.login.LoginUserManager;
+import howard.cinema.manage.model.login.UserInfoEditRequest;
 import howard.cinema.manage.model.acl.user.UserPasswordEditRequest;
-import howard.cinema.manage.model.common.CommonRequest;
+import howard.cinema.manage.model.common.CommonTokenRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
  * @time: 2020/7/15 15:12
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/common")
 public class LoginUserController {
 
     @Autowired
@@ -30,7 +31,22 @@ public class LoginUserController {
     }
 
     @PostMapping("/loginout")
-    public String loginout(@Valid @RequestBody CommonRequest request){
+    public String loginout(@Valid @RequestBody CommonTokenRequest request){
         return  manager.loginout(request);
+    }
+
+    @PostMapping("/info")
+    public String info(@Valid @RequestBody CommonTokenRequest request){
+        return manager.info(request);
+    }
+
+    @PostMapping("/infoedit")
+    public String infoEdit(@Valid @RequestBody UserInfoEditRequest request){
+        return manager.infoEdit(request);
+    }
+
+    @PostMapping("/infoedit")
+    public String getResources(@Valid @RequestBody CommonTokenRequest request){
+        return manager.getResourceList(request);
     }
 }

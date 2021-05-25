@@ -11,20 +11,10 @@ import javax.validation.constraints.NotNull;
  * @author: huojiajin
  * @time: 2020/5/28 11:39
  */
-public class CommonRequest extends BaseEntity {
+public class CommonRequest extends CommonTokenRequest {
 
-    @NotBlank(message = "请填写登陆凭证")
-    private String token;//登陆凭证
     @NotNull(message = "请填写资源编码")
     private int resourceCode;//菜单code
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public int getResourceCode() {
         return resourceCode;

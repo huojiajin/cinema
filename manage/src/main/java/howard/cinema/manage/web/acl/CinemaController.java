@@ -50,7 +50,7 @@ public class CinemaController extends MyBaseController {
     }
 
     @PostMapping("/disable")
-    public String disable(@Valid @RequestBody CommonIdRequest deleteRequest){
+    public String disable(@Valid @RequestBody CommonIdRequest deleteRequest, HttpServletRequest httpServletRequest){
         return cinemaManager.disable(deleteRequest);
     }
 

@@ -16,6 +16,7 @@ public class SystemInfo extends AbstractInsertTimeEntity {
     private String userId;//操作用户
     private String info;//操作详情
     private String eigenValue;//特征值
+    private String ip;//操作IP
 
     public String getUserId() {
         return userId;
@@ -39,5 +40,13 @@ public class SystemInfo extends AbstractInsertTimeEntity {
 
     public void setEigenValue(String eigenValue) {
         this.eigenValue = eigenValue;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

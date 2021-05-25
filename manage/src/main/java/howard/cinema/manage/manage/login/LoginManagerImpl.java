@@ -109,10 +109,24 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager {
         String token = UUID.randomUUID().toString().replace("-", "");
         memcachedClient.set(MyMecachedPrefix.loginTokenPrefix + token, 30 * 60, user.toJson());
 
+        //查询菜单权限
+        List<RoleResource> roleResources = roleResourceMapper.listByRoleId(user.getRoleId());
+        List<ResourceModel> resourceModelList = roleResources.stream().map(this::getResourceModel).collect(Collectors.toList());
+
+        //存放菜单权限至memcached
+        List<Integer> resourceCodeList = roleResources.stream().map(r -> r.getResourceType().getCode()).collect(Collectors.toList());
+        memcachedClient.set(MyMecachedPrefix.loginResourcePrefix + user.getId(), 30 * 60, resourceCodeList);
+
         //拼装返回信息
+        LoginResponse loginResponse = assmbleLoginResponse(user, token, resourceModelList);
+        response.setData(loginResponse);
+        return response.toJson();
+    }
+
+    @Override
+    public LoginResponse assmbleLoginResponse(User user, String token, List<ResourceModel> resourceModelList) {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
-
         Role role = roleMapper.findById(user.getRoleId());
         loginResponse.setRoleId(role.getId());
         loginResponse.setRoleName(role.getName());
@@ -121,16 +135,8 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager {
         loginResponse.setCinemaName(cinema.getName());
         loginResponse.setName(user.getName());
         loginResponse.setMobile(user.getMobile());
-        List<RoleResource> roleResources = roleResourceMapper.listByRoleId(user.getRoleId());
-        List<ResourceModel> resourceModelList = roleResources.stream().map(this::getResourceModel).collect(Collectors.toList());
         loginResponse.setResourceList(resourceModelList);
-        response.setData(loginResponse);
-
-        //存放菜单权限至memcached
-        List<Integer> resourceCodeList = roleResources.stream().map(r -> r.getResourceType().getCode()).collect(Collectors.toList());
-        memcachedClient.set(MyMecachedPrefix.loginResourcePrefix + user.getId(), 30 * 60, resourceCodeList);
-
-        return response.toJson();
+        return loginResponse;
     }
 
     private ResourceModel getResourceModel(RoleResource r) {

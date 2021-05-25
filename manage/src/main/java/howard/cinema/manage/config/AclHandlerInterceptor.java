@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  * @time: 2020/5/27 16:25
  */
 @Service
+@SuppressWarnings("unchecked")
 public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -63,20 +64,20 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
                 if (resourceListObject == null) {
                     List<Integer> resourceCodeList = getResourceCode(user);
                     if (CollectionTools.isEmpty(resourceCodeList)) {
-                        if (resourceCode != 99) {
+                        if (urlSplitArr[1].equals("common")) {
                             return errorResponse(response, ErrorType.NORESOURCE);
                         }
                     }else {
                         memcachedClient.set(MyMecachedPrefix.loginResourcePrefix + user.getId(), 30 * 60, resourceCodeList);
-                        boolean contains = resourceCodeList.contains(resourceCode) || resourceCode == 99;
-                        if (!contains) {
+                        boolean contains = resourceCodeList.contains(resourceCode);
+                        if (!contains && !urlSplitArr[1].equals("common")) {
                             return errorResponse(response, ErrorType.NORESOURCE);
                         }
                     }
                 } else {
                     List<Integer> resourceCodeList = (List<Integer>) resourceListObject;
-                    boolean contains = resourceCodeList.contains(resourceCode) || resourceCode == 99;
-                    if (!contains) {
+                    boolean contains = resourceCodeList.contains(resourceCode);
+                    if (!contains && !urlSplitArr[1].equals("common")) {
                         List<Integer> resourceCodeListNew = getResourceCode(user);
                         if (CollectionTools.isEmpty(resourceCodeList) || !resourceCodeListNew.contains(resourceCode)) {
                             return errorResponse(response, ErrorType.NORESOURCE);

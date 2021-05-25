@@ -1,7 +1,8 @@
 package howard.cinema.manage.manage.login;
 
+import howard.cinema.manage.model.login.UserInfoEditRequest;
 import howard.cinema.manage.model.acl.user.UserPasswordEditRequest;
-import howard.cinema.manage.model.common.CommonRequest;
+import howard.cinema.manage.model.common.CommonTokenRequest;
 
 /**
  *@ClassName LoginUserManager
@@ -30,5 +31,32 @@ public interface LoginUserManager {
      * @Param [request]
      * @return java.lang.String
      **/
-    String loginout(CommonRequest request);
+    String loginout(CommonTokenRequest request);
+
+    /**
+     * @name: info
+     * @description: 获取用户信息
+     * @author: huojiajin
+     * @para: [request]
+     * @return: java.lang.String
+    **/
+    String info(CommonTokenRequest request);
+
+    /**
+     * @name: infoEdit
+     * @description: 修改个人信息
+     * @author: huojiajin
+     * @para: [request]
+     * @return: java.lang.String
+    **/
+    String infoEdit(UserInfoEditRequest request);
+
+    /**
+     * @name: getResourceList
+     * @description: 获取用户资源列表
+     * @author: huojiajin
+     * @para: [request]
+     * @return: java.lang.String
+    **/
+    String getResourceList(CommonTokenRequest request);
 }

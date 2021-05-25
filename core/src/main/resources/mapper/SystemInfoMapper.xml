@@ -8,15 +8,16 @@
         <result column="user_id" property="userId"/>
         <result column="info" property="info"/>
         <result column="eigen_value" property="eigenValue"/>
+        <result column="ip" property="ip"/>
     </resultMap>
 
     <sql id="Insert_Column">
-        id,user_id,info,insert_time,eigen_value
+        id,user_id,info,insert_time,eigen_value,ip
     </sql>
 
     <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.SystemInfo">
         insert into cinema_system_info (
         <include refid="Insert_Column"></include>
-        ) values (#{id},#{userId},#{info},#{insertTime},#{eigenValue})
+        ) values (#{id},#{userId},#{info},#{insertTime},#{eigenValue},#{ip})
     </insert>
 </mapper>

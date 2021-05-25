@@ -18,7 +18,6 @@
         <java.version>11</java.version>
     </properties>
     <dependencies>
-
         <!-- spring boot web自动配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
