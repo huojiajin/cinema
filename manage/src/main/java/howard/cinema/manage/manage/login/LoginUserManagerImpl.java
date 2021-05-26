@@ -74,9 +74,9 @@ public class LoginUserManagerImpl extends AbstractManager implements LoginUserMa
         if (userObj != null) {
             try {
                 User user = JsonTools.json2Object(String.valueOf(userObj), User.class);
+                addSysLog( user.getName() +"退出登录", request.getToken(), user.getId());
                 memcachedClient.delete(MyMecachedPrefix.loginResourcePrefix + user.getId());
                 memcachedClient.delete(MyMecachedPrefix.loginTokenPrefix + request.getToken());
-                addSysLog( user.getName() +"退出登录", request.getToken(), user.getId());
             } catch (IOException e) {
                 logger.error("", e);
             }

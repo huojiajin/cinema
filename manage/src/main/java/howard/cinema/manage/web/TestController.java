@@ -1,5 +1,6 @@
 package howard.cinema.manage.web;
 
+import howard.cinema.manage.web.common.MyBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 
 /**
@@ -17,16 +19,24 @@ import java.lang.reflect.Method;
  * @time: 2020/5/25 17:50
  */
 @RestController
-public class TestController {
+public class TestController extends MyBaseController {
 
     @Value("${spring.application.name}")
     private String name;
     @Autowired
     private ConfigurableApplicationContext run;
 
+
     @RequestMapping(value = "/health",method = {RequestMethod.GET,RequestMethod.HEAD})
     public String heathTest(){
 
+        printUrl();
+        return "已打印所有链接";
+    }
+
+    @PostConstruct
+    private void printUrl() {
+        logger.info("======正在打印已注册链接======");
         //获取restcontroller注解的类名
         String[] beanNamesForAnnotation = run.getBeanNamesForAnnotation(RestController.class);
 
@@ -63,6 +73,6 @@ public class TestController {
                 }
             }
         }
-        return "已打印所有链接";
+        logger.info("======打印完毕======");
     }
 }

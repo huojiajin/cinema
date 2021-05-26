@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @SpringBootApplication
 @ServletComponentScan
 @MapperScan(value = "howard.cinema.core.dao.mapper", annotationClass = Component.class)
-@ComponentScan(value = "howard.cinema.core.dao.mapper")
+@ComponentScan(value = {"howard.cinema.core.dao.mapper","howard.cinema.manage"})
 public class ManageApplication {
 
     public static void main(String[] args) {

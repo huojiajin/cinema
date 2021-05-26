@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @time: 2020/7/15 15:12
  */
 @RestController
-@RequestMapping("/user/common")
+@RequestMapping("/common/user")
 public class LoginUserController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class LoginUserController {
         return manager.infoEdit(request);
     }
 
-    @PostMapping("/infoedit")
+    @PostMapping("/resourceList")
     public String getResources(@Valid @RequestBody CommonTokenRequest request){
         return manager.getResourceList(request);
     }
