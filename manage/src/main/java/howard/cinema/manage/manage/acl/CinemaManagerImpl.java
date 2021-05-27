@@ -11,6 +11,7 @@ import howard.cinema.manage.manage.common.AbstractManager;
 import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaQueryModel;
+import howard.cinema.manage.model.acl.cinema.CinemaQueryRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
 import howard.cinema.manage.model.common.CommonListReponse;
 import howard.cinema.manage.model.common.CommonRequest;
@@ -39,10 +40,10 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
     private RoleMapper roleMapper;
 
     @Override
-    public String query(CommonRequest request){
+    public String query(CinemaQueryRequest request){
         CommonResponse<CommonListReponse<CinemaQueryModel>> response = new CommonResponse<>();
         CommonListReponse<CinemaQueryModel> data = new CommonListReponse<>();
-        List<CinemaQueryModel> childCinemaList = findChildCinemaList(null);//最顶层影院父类ID为空
+        List<CinemaQueryModel> childCinemaList = findChildCinemaList(request.getParentId());//最顶层影院父类ID为空
         data.setResult(childCinemaList);
         response.setData(data);
         return response.toJson();

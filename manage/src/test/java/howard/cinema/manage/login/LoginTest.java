@@ -40,7 +40,7 @@ public class LoginTest extends ApplicationTests {
                 b[i] += 256;
             }
         }
-        String fileName = "C:\\Users\\huojiajin\\Desktop\\out.png";
+        String fileName = "C:\\Users\\霍佳进\\Desktop\\out.png";
         File file = new File(fileName);
         if (!file.exists()){
             file.createNewFile();
@@ -56,8 +56,8 @@ public class LoginTest extends ApplicationTests {
     public void login() throws IOException {
         LoginRequest request = new LoginRequest();
         request.setLoginName("admin");
-        request.setPassword("123456");
-        request.setVerifyId("b6f08a35e43c4e87a8c3bc321bcb995b");
+//        request.setPassword("123456");
+//        request.setVerifyId("b6f08a35e43c4e87a8c3bc321bcb995b");
         request.setVerifyCode("4rwd");
 //        String url = "http://39.106.226.73/manage/login/login";
         String url = "http://localhost/manage/login/login";

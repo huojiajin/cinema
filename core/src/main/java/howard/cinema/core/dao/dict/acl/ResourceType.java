@@ -19,7 +19,7 @@ public enum ResourceType {
 
     B_ZFSZ("支付设置", 2, 1, null){},
     B_ZFSZ_ZFB("支付宝", 21, 2, B_ZFSZ){},
-    B_ZFSZ_wx("支付宝", 22, 2, B_ZFSZ){},
+    B_ZFSZ_wx("微信", 22, 2, B_ZFSZ){},
 
     C_DDGL("订单管理", 3, 1, null){},
     C_DDGL_ZDDGL("总订单管理", 31, 2, C_DDGL){},

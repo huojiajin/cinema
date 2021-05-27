@@ -2,6 +2,7 @@ package howard.cinema.manage.manage.acl;
 
 import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
+import howard.cinema.manage.model.acl.cinema.CinemaQueryRequest;
 import howard.cinema.manage.model.acl.role.RoleAddRequest;
 import howard.cinema.manage.model.acl.role.RoleEditRequest;
 import howard.cinema.manage.model.acl.role.RoleResourceRequest;
@@ -23,7 +24,7 @@ public interface CinemaManager {
      * @para: [request]
      * @return: java.lang.String
     **/
-    String query(CommonRequest request);
+    String query(CinemaQueryRequest request);
 
     /**
      * @name: list

@@ -3,6 +3,7 @@ package howard.cinema.manage.web.acl;
 import howard.cinema.manage.manage.acl.CinemaManager;
 import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
+import howard.cinema.manage.model.acl.cinema.CinemaQueryRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
 import howard.cinema.manage.model.common.CommonRequest;
 import howard.cinema.manage.web.common.MyBaseController;
@@ -29,7 +30,7 @@ public class CinemaController extends MyBaseController {
     private CinemaManager cinemaManager;
 
     @PostMapping("/query")
-    public String query(@Valid @RequestBody CommonRequest pageRequest, HttpServletRequest request){
+    public String query(@Valid @RequestBody CinemaQueryRequest pageRequest, HttpServletRequest request){
         return cinemaManager.query(pageRequest);
     }
 
