@@ -20,13 +20,13 @@
 
     <select id="findAll" resultMap="ResultMap">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema_user order by update_time desc
     </select>
 
     <select id="findById" resultMap="ResultMap" parameterType="String">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema_user
         where id = #{id}
     </select>
@@ -40,40 +40,51 @@
     </insert>
 
     <update id="update" parameterType="howard.cinema.core.dao.entity.acl.User">
-        update cinema_user set
-        <if test="roleId != null and roleId != ''">
-            role_id = #{roleId},
-        </if>
-        <if test="name != null and name != ''">
-            name = #{name},
-        </if>
-        <if test="mobile != null and mobile != ''">
-            mobile = #{mobile},
-        </if>
-        <if test="updateTime != null and updateTime != ''">
-            update_time = #{updateTime}
-        </if>
+        update cinema_user
+        <set>
+            <if test="roleId != null and roleId != ''">
+                role_id = #{roleId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime}
+            </if>
+        </set>
         where id = #{id}
     </update>
 
     <update id="updateStatus">
-        update cinema_user set status = #{status}, update_time = #{updateTime} where id = #{id}
+        update cinema_user
+        set status      = #{status},
+            update_time = #{updateTime}
+        where id = #{id}
     </update>
 
     <update id="updatePassword">
-        update cinema_user set password = #{password}, update_time = #{updateTime} where id = #{id}
+        update cinema_user
+        set password    = #{password},
+            update_time = #{updateTime}
+        where id = #{id}
     </update>
 
     <select id="listByRoleId" resultMap="ResultMap" parameterType="String">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema_user
         where role_id = #{roleId}
     </select>
 
     <select id="findByLoginName" resultMap="ResultMap" parameterType="String">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema_user
         where login_name = #{loginName}
     </select>

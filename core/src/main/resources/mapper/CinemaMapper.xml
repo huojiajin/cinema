@@ -23,26 +23,26 @@
 
     <select id="findById" resultMap="ResultMap" parameterType="String">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema
         where id = #{id}
     </select>
 
     <select id="findAll" resultMap="ResultMap">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema order by list
     </select>
 
     <select id="listUse" resultMap="ResultMap">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema where has_delete = false order by list
     </select>
 
     <select id="findByParentId" resultMap="ResultMap" parameterType="String">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema
         where
         <choose>
@@ -61,34 +61,36 @@
     </insert>
 
     <update id="update" parameterType="howard.cinema.core.dao.entity.acl.Cinema">
-        update cinema set
-        <if test="parentId != null and parentId != ''">
-            parent_id = #{parentId},
-        </if>
-        <if test="name != null and name != ''">
-            name = #{name},
-        </if>
-        <if test="code != null and code != ''">
-            code = #{code},
-        </if>
-        <if test="type != null">
-            type = #{type},
-        </if>
-        <if test="posType != null">
-            pos_type = #{posType},
-        </if>
-        <if test="customerId != null and customerId != ''">
-            customer_id = #{customerId},
-        </if>
-        <if test="info != null and info != ''">
-            info = #{info},
-        </if>
-        <if test="list != null and list != ''">
-            list = #{list},
-        </if>
-        <if test="updateTime != null">
-            update_time = #{updateTime}
-        </if>
+        update cinema
+        <set>
+            <if test="parentId != null and parentId != ''">
+                parent_id = #{parentId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="posType != null">
+                pos_type = #{posType},
+            </if>
+            <if test="customerId != null and customerId != ''">
+                customer_id = #{customerId},
+            </if>
+            <if test="info != null and info != ''">
+                info = #{info},
+            </if>
+            <if test="list != null and list != ''">
+                list = #{list},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime}
+            </if>
+        </set>
         where id = #{id}
     </update>
 
@@ -100,7 +102,7 @@
 
     <select id="findByName" resultMap="ResultMap" parameterType="String">
         select
-        <include refid="Insert_Column"></include>
+        <include refid="Insert_Column"/>
         from cinema
         where name = #{name}
     </select>

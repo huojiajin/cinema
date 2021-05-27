@@ -25,7 +25,7 @@
         <include refid="Insert_Column"/>
         ) values
         <foreach collection="list" item="resource" separator=",">
-            (#{resource.id},#{resource.insertTime},#{resource.roleId},#{resource.userId})
+            (#{resource.id},#{resource.insertTime},#{resource.roleId},#{resource.resourceType})
         </foreach>
     </insert>
 
