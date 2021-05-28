@@ -88,4 +88,22 @@
         from cinema_user
         where login_name = #{loginName}
     </select>
+
+    <select id="list" resultMap="ResultMap" parameterType="howard.cinema.core.manage.model.acl.user.UserListRequest">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_user
+        <where>
+            <if test="roleId != null and roleId != ''">role_id = #{roleId}</if>
+            <choose>
+                <when test="roleIds != null and roleIds.size() > 0">
+                    role_id in
+                    <foreach collection="roleIds" item="roleIdString" separator="," open="(" close=")">#{roleIdString}</foreach>
+                </when>
+                <otherwise>role_id is null</otherwise>
+            </choose>
+            <if test="loginName != null and loginName != ''">login_name = #{loginName}</if>
+            <if test="name != null and name != ''">name = #{name}</if>
+        </where>
+    </select>
 </mapper>

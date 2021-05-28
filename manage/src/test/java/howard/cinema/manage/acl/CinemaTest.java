@@ -114,4 +114,16 @@ public class CinemaTest extends ApplicationTests {
         CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
         echo(response);
     }
+
+    @Test
+    public void customers() throws Exception{
+        CommonRequest request = new CommonRequest();
+        request.setToken(token);
+        request.setResourceCode(11);
+
+        String url = "http://localhost/manage/cinema/enable";
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
 }

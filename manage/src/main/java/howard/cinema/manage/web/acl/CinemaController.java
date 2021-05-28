@@ -59,4 +59,9 @@ public class CinemaController extends MyBaseController {
     public String enable(@Valid @RequestBody CommonIdRequest deleteRequest){
         return cinemaManager.enable(deleteRequest);
     }
+
+    @PostMapping("/customer")
+    public String customer(@Valid @RequestBody CommonRequest request){
+        return cinemaManager.customer(request);
+    }
 }

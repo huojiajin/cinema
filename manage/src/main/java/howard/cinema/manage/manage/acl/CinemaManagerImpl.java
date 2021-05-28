@@ -5,13 +5,9 @@ import howard.cinema.core.dao.entity.acl.Cinema;
 import howard.cinema.core.dao.entity.acl.Customer;
 import howard.cinema.core.dao.mapper.acl.CinemaMapper;
 import howard.cinema.core.dao.mapper.acl.CustomerMapper;
-import howard.cinema.core.dao.mapper.acl.RoleMapper;
 import howard.cinema.core.manage.model.CommonResponse;
 import howard.cinema.manage.manage.common.AbstractManager;
-import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
-import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
-import howard.cinema.manage.model.acl.cinema.CinemaQueryModel;
-import howard.cinema.manage.model.acl.cinema.CinemaQueryRequest;
+import howard.cinema.manage.model.acl.cinema.*;
 import howard.cinema.manage.model.common.CommonIdRequest;
 import howard.cinema.manage.model.common.CommonListReponse;
 import howard.cinema.manage.model.common.CommonRequest;
@@ -36,8 +32,6 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
     private CinemaMapper cinemaMapper;
     @Autowired
     private CustomerMapper customerMapper;
-    @Autowired
-    private RoleMapper roleMapper;
 
     @Override
     public String query(CinemaQueryRequest request){
@@ -141,6 +135,22 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         cinemaMapper.updateStop(false, deleteRequest.getId());
         addSysLog("启用影城", deleteRequest.getToken(), deleteRequest.getId());
         response.setMessage("启用影城成功");
+        return response.toJson();
+    }
+
+    @Override
+    public String customer(CommonRequest request){
+        CommonResponse<CommonListReponse> response = new CommonResponse<>();
+        CommonListReponse<CinemaCustomerModel> data = new CommonListReponse<>();
+
+        List<CinemaCustomerModel> result = customerMapper.findAll().stream().map(c -> {
+            CinemaCustomerModel model = new CinemaCustomerModel();
+            model.setId(c.getId());
+            model.setName(c.getName());
+            return model;
+        }).collect(Collectors.toList());
+        data.setResult(result);
+        response.setData(data);
         return response.toJson();
     }
 }

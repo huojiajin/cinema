@@ -3,8 +3,8 @@ package howard.cinema.manage.manage.acl;
 import howard.cinema.core.dao.entity.acl.User;
 import howard.cinema.manage.model.acl.user.UserAddRequest;
 import howard.cinema.manage.model.acl.user.UserEditRequest;
+import howard.cinema.manage.model.acl.user.UserQueryRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
-import howard.cinema.manage.model.common.CommonPageRequest;
 
 /**
  * @name: UserManager
@@ -30,7 +30,7 @@ public interface UserManager {
      * @Param [request]
      * @return java.lang.String
      **/
-    String query(CommonPageRequest request);
+    String query(UserQueryRequest request);
 
     /**
      * @Name add

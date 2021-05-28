@@ -10,14 +10,15 @@ import howard.cinema.core.dao.mapper.acl.CinemaMapper;
 import howard.cinema.core.dao.mapper.acl.RoleMapper;
 import howard.cinema.core.dao.mapper.acl.UserMapper;
 import howard.cinema.core.manage.model.CommonResponse;
+import howard.cinema.core.manage.model.acl.user.UserListRequest;
 import howard.cinema.core.manage.tools.RegexValid;
 import howard.cinema.core.manage.tools.SecurityUtil;
 import howard.cinema.manage.manage.common.AbstractManager;
 import howard.cinema.manage.model.acl.user.UserAddRequest;
 import howard.cinema.manage.model.acl.user.UserEditRequest;
 import howard.cinema.manage.model.acl.user.UserModel;
+import howard.cinema.manage.model.acl.user.UserQueryRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
-import howard.cinema.manage.model.common.CommonPageRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,11 +51,23 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
     }
 
     @Override
-    public String query(CommonPageRequest request){
-        CommonResponse<PageInfo> response = new CommonResponse<PageInfo>();
-
+    public String query(UserQueryRequest request){
+        CommonResponse<PageInfo> response = new CommonResponse<>();
+        //拼装请求集合
+        UserListRequest listRequest = new UserListRequest();
+        BeanUtils.copyProperties(request, listRequest);
+        if (hasText(request.getCinemaId())) {//如果有影城ID，则查询对应的角色ID
+            List<Role> roleList = roleMapper.listByCinemaId(request.getCinemaId());
+            if (isEmpty(roleList)){
+                PageInfo pageInfo = new PageInfo();
+                response.setData(pageInfo);
+                return response.toJson();
+            }
+            listRequest.setRoleIds(roleList.stream().map(Role::getId).collect(Collectors.toList()));
+        }
+        //开始查询
         PageHelper.startPage(request.getPageNo(), request.getPageSize());
-        List<User> userList = userMapper.findAll();
+        List<User> userList = userMapper.list(listRequest);
         PageInfo<User> page = new PageInfo<>(userList);
         //对结果进行转换
         page.setList(userList.stream().map(u ->{
@@ -82,7 +95,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
         }
         User existsUser = findByLoginName(loginName);
         if (existsUser != null){
-            response.setError(ErrorType.USEREXISTS);
+            return response.setError(ErrorType.USEREXISTS);
         }
         Role role = roleMapper.findById(addRequest.getRoleId());
         if (role == null || role.isHasDelete()){

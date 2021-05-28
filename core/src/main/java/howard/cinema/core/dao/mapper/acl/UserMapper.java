@@ -1,9 +1,9 @@
 package howard.cinema.core.dao.mapper.acl;
 
 import howard.cinema.core.dao.entity.acl.User;
+import howard.cinema.core.manage.model.acl.user.UserListRequest;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -66,7 +66,7 @@ public interface UserMapper {
      * @Param [status, id]
      * @Return void
      **/
-    void updateStatus(@Param("param") User.UserStatus status, @Param("updateTime") LocalDateTime updateTime, @Param("id")String id);
+    void updateStatus(@Param("status") User.UserStatus status, @Param("updateTime") LocalDateTime updateTime, @Param("id")String id);
 
     /**
      * @Name updatePassword
@@ -97,4 +97,14 @@ public interface UserMapper {
      * @Return howard.cinema.core.dao.entity.acl.User
      **/
     User findByLoginName(@Param("loginName")String loginName);
+
+    /**
+     * @Name list
+     * @Author HuoJiaJin
+     * @Description 根据条件查询用户集合
+     * @Date 2021/5/27 23:54
+     * @Param [request]
+     * @Return java.util.List<howard.cinema.core.dao.entity.acl.User>
+     **/
+    List<User> list(UserListRequest request);
 }

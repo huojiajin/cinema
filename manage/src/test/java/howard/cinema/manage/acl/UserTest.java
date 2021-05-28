@@ -5,6 +5,7 @@ import howard.cinema.core.manage.tools.JsonTools;
 import howard.cinema.core.manage.tools.httpclient.HttpClientHelper;
 import howard.cinema.manage.ApplicationTests;
 import howard.cinema.manage.model.acl.user.UserAddRequest;
+import howard.cinema.manage.model.acl.user.UserQueryRequest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -21,12 +22,28 @@ public class UserTest extends ApplicationTests {
     public void userAdd() throws IOException {
 
         UserAddRequest request = new UserAddRequest();
-        request.setToken("1a8db6051b2846fd918ae851ffb93d3e");
+        request.setToken("135f0cac470946048c620d0ba2209ab8");
         request.setResourceCode(11);
+        request.setLoginName("22");
         request.setRoleId("123456");
-        request.setName("霍佳进");
-        request.setMobile("18513086652");
+        request.setName("22");
+        request.setMobile("13315089000");
         String url = "http://localhost/manage/user/add";
+//        String url = "http://39.106.226.73/manage/user/add";
+
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
+        echo(responseStr);
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
+
+    @Test
+    public void query() throws IOException {
+
+        UserQueryRequest request = new UserQueryRequest();
+        request.setToken("135f0cac470946048c620d0ba2209ab8");
+        request.setResourceCode(11);
+        String url = "http://localhost/manage/user/query";
 //        String url = "http://39.106.226.73/manage/user/add";
 
         String responseStr = HttpClientHelper.jsonPost(url, request.toJson());

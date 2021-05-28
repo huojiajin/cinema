@@ -22,6 +22,7 @@ public class CinemaQueryModel extends BaseEntity {
     private String customerName;//客户
     private String info;//描述
     private int list;//排序
+    private String parentId;//上级影院ID
     private boolean hasUse;//是否在用
     private List<CinemaQueryModel> result;//下级影院列表
 
@@ -87,6 +88,14 @@ public class CinemaQueryModel extends BaseEntity {
 
     public void setList(int list) {
         this.list = list;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     public boolean isHasUse() {

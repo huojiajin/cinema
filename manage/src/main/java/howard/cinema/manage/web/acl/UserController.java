@@ -4,8 +4,8 @@ import howard.cinema.core.dao.entity.common.BaseEntity;
 import howard.cinema.manage.manage.acl.UserManager;
 import howard.cinema.manage.model.acl.user.UserAddRequest;
 import howard.cinema.manage.model.acl.user.UserEditRequest;
+import howard.cinema.manage.model.acl.user.UserQueryRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
-import howard.cinema.manage.model.common.CommonPageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +28,7 @@ public class UserController extends BaseEntity {
     private UserManager userManager;
 
     @PostMapping("/query")
-    public String query(@Valid @RequestBody CommonPageRequest request){
+    public String query(@Valid @RequestBody UserQueryRequest request){
         return userManager.query(request);
     }
 

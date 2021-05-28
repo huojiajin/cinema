@@ -3,11 +3,7 @@ package howard.cinema.manage.manage.acl;
 import howard.cinema.manage.model.acl.cinema.CinemaAddRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaEditRequest;
 import howard.cinema.manage.model.acl.cinema.CinemaQueryRequest;
-import howard.cinema.manage.model.acl.role.RoleAddRequest;
-import howard.cinema.manage.model.acl.role.RoleEditRequest;
-import howard.cinema.manage.model.acl.role.RoleResourceRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
-import howard.cinema.manage.model.common.CommonPageRequest;
 import howard.cinema.manage.model.common.CommonRequest;
 
 /**
@@ -70,4 +66,14 @@ public interface CinemaManager {
      * @return: java.lang.String
     **/
     String enable(CommonIdRequest deleteRequest);
+
+    /**
+     * @Name customer
+     * @Author HuoJiaJin
+     * @Description 获取客户列表
+     * @Date 2021/5/27 23:05
+     * @Param [request]
+     * @Return java.lang.String
+     **/
+    String customer(CommonRequest request);
 }
