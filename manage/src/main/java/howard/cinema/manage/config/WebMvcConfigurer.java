@@ -1,5 +1,6 @@
 package howard.cinema.manage.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +48,7 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
     //或这个：Could not find acceptable representation
     //解决此问题如下
     public ObjectMapper getObjectMapper() {
-        return new ObjectMapper();
+        return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     //2.2：解决No converter found for return value of type: xxxx

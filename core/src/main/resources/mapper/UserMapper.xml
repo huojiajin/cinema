@@ -100,7 +100,7 @@
                     role_id in
                     <foreach collection="roleIds" item="roleIdString" separator="," open="(" close=")">#{roleIdString}</foreach>
                 </when>
-                <otherwise>role_id is null</otherwise>
+                <when test="(roleIds == null or roleIds.size() == 0) and (cinemaId != null and cinemaId != '')">role_id is null</when>
             </choose>
             <if test="loginName != null and loginName != ''">login_name = #{loginName}</if>
             <if test="name != null and name != ''">name = #{name}</if>

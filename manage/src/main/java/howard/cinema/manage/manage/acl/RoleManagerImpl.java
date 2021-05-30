@@ -105,12 +105,15 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
     public String update(RoleEditRequest editRequest){
         CommonResponse response = new CommonResponse();
         Role role = roleMapper.findById(editRequest.getId());
-        Role byName = roleMapper.findByName(editRequest.getName());
+
         if (!hasText(editRequest.getName())){
             return response.setError(ErrorType.VALID, "请填写角色名称");
         }
-        if (byName != null && !byName.getId().equals(role.getId())){
-            return response.setError(ErrorType.VALID, "该角色已存在");
+        if (!role.getName().equals(editRequest.getName())){
+            Role byName = roleMapper.findByName(editRequest.getName());
+            if (byName != null) {
+                return response.setError(ErrorType.VALID, "该角色已存在");
+            }
         }
         Cinema cinema = cinemaMapper.findById(editRequest.getCinemaId());
         if (cinema == null){
@@ -148,7 +151,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
     public String resourceConfig(RoleResourceRequest resourceRequest){
         CommonResponse response = new CommonResponse();
         List<RoleResource> roleResourceList = Lists.newArrayList();
-        String roleId = resourceRequest.getRoleId();
+        String roleId = resourceRequest.getId();
         Role role = roleMapper.findById(roleId);
         for (Integer code : resourceRequest.getResourceCodeList()) {
             RoleResource roleResource = new RoleResource();
@@ -162,7 +165,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
             roleResourceList.add(roleResource);
         }
         roleResourceUpdate(roleId, roleResourceList);
-        addSysLog("配置角色" + role.getName() + "的权限", resourceRequest.getToken(), resourceRequest.getRoleId());
+        addSysLog("配置角色" + role.getName() + "的权限", resourceRequest.getToken(), resourceRequest.getId());
         response.setMessage("配置权限成功");
         return response.toJson();
     }

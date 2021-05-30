@@ -22,7 +22,7 @@ public class UserTest extends ApplicationTests {
     public void userAdd() throws IOException {
 
         UserAddRequest request = new UserAddRequest();
-        request.setToken("135f0cac470946048c620d0ba2209ab8");
+        request.setToken("5bc185d3ab9e4bc9b73f143dc7f204fe");
         request.setResourceCode(11);
         request.setLoginName("22");
         request.setRoleId("123456");
@@ -41,7 +41,7 @@ public class UserTest extends ApplicationTests {
     public void query() throws IOException {
 
         UserQueryRequest request = new UserQueryRequest();
-        request.setToken("135f0cac470946048c620d0ba2209ab8");
+        request.setToken("5bc185d3ab9e4bc9b73f143dc7f204fe");
         request.setResourceCode(11);
         String url = "http://localhost/manage/user/query";
 //        String url = "http://39.106.226.73/manage/user/add";

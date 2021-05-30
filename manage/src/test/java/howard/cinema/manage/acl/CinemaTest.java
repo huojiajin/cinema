@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class CinemaTest extends ApplicationTests {
 
-    private static final String token = "93d55216dbe348e780716996275e09b3";
+    private static final String token = "111ce50148ec45e6ba78d6f668928c38";
 
     @Test
     public void cinemaQuery() throws IOException {

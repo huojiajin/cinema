@@ -19,7 +19,8 @@ public class CinemaQueryModel extends BaseEntity {
     private String code;//机构编码
     private CinemaType type;//机构类型
     private PosType posType;//POS类别
-    private String customerName;//客户
+    private String customerId;//客户ID
+    private String customerName;//客户名称
     private String info;//描述
     private int list;//排序
     private String parentId;//上级影院ID
@@ -64,6 +65,14 @@ public class CinemaQueryModel extends BaseEntity {
 
     public void setPosType(PosType posType) {
         this.posType = posType;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {

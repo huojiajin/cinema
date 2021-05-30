@@ -27,7 +27,7 @@
     <select id="findAll" resultMap="ResultMap">
         select
         <include refid="Insert_Column"/>
-        from cinema_role order by list
+        from cinema_role where has_delete = false order by list
     </select>
 
     <insert id="persist" parameterType="howard.cinema.core.dao.entity.acl.Role">
@@ -73,7 +73,7 @@
         select
         <include refid="Insert_Column"/>
         from cinema_role
-        where name = #{name}
+        where name = #{name} and has_delete = false
     </select>
 
     <update id="updateDelete" parameterType="String">
@@ -85,6 +85,6 @@
     <select id="listByCinemaId" resultMap="ResultMap" parameterType="String">
         select
         <include refid="Insert_Column"/>
-        from cinema_role where cinema_id = #{cinemaId} order by list
+        from cinema_role where cinema_id = #{cinemaId} and has_delete = false order by list
     </select>
 </mapper>

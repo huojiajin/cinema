@@ -117,5 +117,7 @@ pagehelper:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: howard.cinema.core.dao.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 

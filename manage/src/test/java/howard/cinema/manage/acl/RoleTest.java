@@ -61,7 +61,7 @@ public class RoleTest extends ApplicationTests {
         RoleResourceRequest request = new RoleResourceRequest();
         request.setToken("daae4849b6ed46fabb527f8448aa5b07");
         request.setResourceCode(12);
-        request.setRoleId("123456");
+        request.setId("123456");
         request.setResourceCodeList(Lists.newArrayList(1,11,12,13,2,21,22,23));
         String url = "http://localhost/manage/role/resource/config";
 //        String url = "http://39.106.226.73/manage/role/resource/config";

@@ -1,5 +1,6 @@
 package howard.cinema.manage.model.acl.cinema;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import howard.cinema.core.dao.dict.acl.CinemaType;
 import howard.cinema.core.dao.dict.acl.PosType;
 import howard.cinema.manage.model.common.CommonRequest;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
  * @author: huojiajin
  * @time: 2021/5/24 14:53
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CinemaEditRequest extends CommonRequest {
 
     @NotBlank(message = "请选择要更新的影城")

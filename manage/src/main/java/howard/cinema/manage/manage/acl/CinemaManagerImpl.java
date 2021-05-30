@@ -95,13 +95,15 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
     public String update(CinemaEditRequest editRequest){
         CommonResponse response = new CommonResponse();
         String name = editRequest.getName();
-        Cinema oldCinema = cinemaMapper.findByName(name);
-        if (oldCinema != null){
-            return response.setError(ErrorType.VALID, "影城名称重复");
-        }
         Cinema byId = cinemaMapper.findById(editRequest.getId());
         if (byId == null){
             return response.setError(ErrorType.VALID, "要更新的影城不存在");
+        }
+        if (!byId.getName().equals(editRequest.getName())) {
+            Cinema oldCinema = cinemaMapper.findByName(name);
+            if (oldCinema != null) {
+                return response.setError(ErrorType.VALID, "影城名称重复");
+            }
         }
         Cinema cinema = new Cinema();
         BeanUtils.copyProperties(editRequest, cinema);

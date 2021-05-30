@@ -14,6 +14,7 @@ import java.util.List;
 public class UserListRequest extends BaseEntity {
 
     private String roleId;//角色ID
+    private String cinemaId;//影城ID
     private List<String> roleIds;//角色ID集合
     private String loginName;//登录名
     private String name;//用户名
@@ -24,6 +25,14 @@ public class UserListRequest extends BaseEntity {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
+    }
+
+    public String getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(String cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     public List<String> getRoleIds() {
