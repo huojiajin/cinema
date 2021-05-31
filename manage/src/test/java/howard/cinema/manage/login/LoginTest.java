@@ -53,6 +53,7 @@ public class LoginTest extends ApplicationTests {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void login() throws IOException {
         LoginRequest request = new LoginRequest();
         request.setLoginName("admin");

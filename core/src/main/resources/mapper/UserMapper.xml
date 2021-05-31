@@ -97,13 +97,14 @@
             <if test="roleId != null and roleId != ''">role_id = #{roleId}</if>
             <choose>
                 <when test="roleIds != null and roleIds.size() > 0">
-                    role_id in
+                    and role_id in
                     <foreach collection="roleIds" item="roleIdString" separator="," open="(" close=")">#{roleIdString}</foreach>
                 </when>
-                <when test="(roleIds == null or roleIds.size() == 0) and (cinemaId != null and cinemaId != '')">role_id is null</when>
+                <when test="cinemaId != null and cinemaId != '' and (roleIds == null or roleIds.size() == 0)">and role_id is null</when>
+                <otherwise>and 1 = 1</otherwise>
             </choose>
-            <if test="loginName != null and loginName != ''">login_name = #{loginName}</if>
-            <if test="name != null and name != ''">name = #{name}</if>
+            <if test="loginName != null and loginName != ''">and login_name = #{loginName}</if>
+            <if test="name != null and name != ''">and name = #{name}</if>
         </where>
     </select>
 </mapper>
