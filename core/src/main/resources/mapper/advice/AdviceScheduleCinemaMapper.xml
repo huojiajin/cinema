@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="howard.cinema.core.dao.mapper.advice.AdviceScheduleCinemaMapper">
+
+    <resultMap id="ResultMap" type="howard.cinema.core.dao.entity.advice.AdviceScheduleCinema">
+        <id column="id" property="id"/>
+        <result column="insert_time" property="insertTime"/>
+        <result column="schedule_id" property="scheduleId"/>
+        <result column="cinema_id" property="cinemaId"/>
+        <result column="cinema_name" property="cinemaName"/>
+    </resultMap>
+
+    <sql id="Insert_Column">
+        id,insert_time,schedule_id,cinema_id,cinema_name
+    </sql>
+
+    <select id="findByScheduleId" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_advice_schedule_cinema where schedule_id = #{scheduleId}
+    </select>
+
+    <insert id="persistAll" parameterType="list">
+        insert into cinema_advice_schedule_cinema (
+        <include refid="Insert_Column"/>
+        ) values
+        <foreach collection="list" item="cinema" separator=",">
+            (#{cinema.id},#{cinema.insertTime},#{cinema.scheduleId},#{cinema.cinemaId},#{cinema.cinema_name}
+        </foreach>
+    </insert>
+</mapper>

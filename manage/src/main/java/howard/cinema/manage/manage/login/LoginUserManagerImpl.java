@@ -63,8 +63,7 @@ public class LoginUserManagerImpl extends AbstractManager implements LoginUserMa
         String password = new BigInteger(1, newHashBytes).toString(16);
         userMapper.updatePassword(password, LocalDateTime.now(),user.getId());
         addSysLog( user.getName() +"修改密码", request.getToken(), user.getId());
-        response.setMessage("修改密码成功");
-        return response.toJson();
+        return response.setMessage("修改密码成功");
     }
 
     @Override
@@ -81,8 +80,7 @@ public class LoginUserManagerImpl extends AbstractManager implements LoginUserMa
                 logger.error("", e);
             }
         }
-        response.setMessage("退出登录成功！");
-        return response.toJson();
+        return response.setMessage("退出登录成功！");
     }
 
     @Override
@@ -93,8 +91,7 @@ public class LoginUserManagerImpl extends AbstractManager implements LoginUserMa
         List<RoleResource> roleResources = roleResourceMapper.listByRoleId(user.getRoleId());
         List<ResourceModel> resourceModelList = roleResources.stream().map(this::getResourceModel).collect(Collectors.toList());
         LoginResponse loginResponse = loginManager.assmbleLoginResponse(user, request.getToken(), resourceModelList);
-        response.setData(loginResponse);
-        return response.toJson();
+        return response.setData(loginResponse);
     }
 
     private ResourceModel getResourceModel(RoleResource r) {
@@ -115,8 +112,7 @@ public class LoginUserManagerImpl extends AbstractManager implements LoginUserMa
         String userKey = MyMecachedPrefix.loginTokenPrefix + request.getToken();
         memcachedClient.add(userKey, 30 * 60, userEntity.toJson());
         addSysLog( userEntity.getName() +"修改个人信息", request.getToken(), userEntity.getId());
-        response.setMessage("修改个人信息成功");
-        return response.toJson();
+        return response.setMessage("修改个人信息成功");
     }
 
     @Override
@@ -136,8 +132,7 @@ public class LoginUserManagerImpl extends AbstractManager implements LoginUserMa
             memcachedClient.add(resourceKey, 30*60, resourceCodeList);//保存到memacached
         }
         data.setResult(resourceCodeList);
-        response.setData(data);
-        return response.toJson();
+        return response.setData(data);
     }
 
     public List<Integer> getResourceCode(User user) {

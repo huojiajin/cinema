@@ -37,16 +37,18 @@ public class CommonResponse<T> extends BaseEntity {
         return message;
     }
 
-    public void setMessage(String message) {
+    public String setMessage(String message) {
         this.message = message;
+        return this.toJson();
     }
 
     public T getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public String setData(T data) {
         this.data = data;
+        return this.toJson();
     }
 
     public String setError(ErrorType errorType){

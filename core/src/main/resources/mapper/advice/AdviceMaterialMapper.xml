@@ -12,14 +12,19 @@
         <result column="thumbnail" property="thumbnail" jdbcType="Clob" javaType="java.lang.String"/>
         <result column="file_path" property="filePath"/>
         <result column="remark" property="remark"/>
-        <result column="status" property="status"/>
         <result column="operator_id" property="operatorId"/>
         <result column="has_delete" property="hasDelete"/>
     </resultMap>
 
     <sql id="Insert_Column">
-        id,insert_time,update_time,name,material_type,upload,thumbnail,file_path,remark,status,operator_id,has_delete
+        id,insert_time,update_time,name,material_type,upload,thumbnail,file_path,remark,operator_id,has_delete
     </sql>
+
+    <select id="findById" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_advice_material where id = #{id}
+    </select>
 
     <select id="findAll" resultMap="ResultMap">
         select
@@ -31,12 +36,30 @@
         insert into cinema_advice_material (
         <include refid="Insert_Column"/>
         ) values (
-        #{id},#{insertTime},#{updateTime},#{name},#{material_type},#{upload},#{thumbnail},#{file_path},#{remark},#{status},#{operator_id},#{has_delete}
+        #{id},#{insertTime},#{updateTime},#{name},#{material_type},#{upload},#{thumbnail},#{file_path},#{remark},#{operator_id},#{has_delete}
         )
     </insert>
 
-    <update id="updateUpload" parameterType="howard.cinema.core.dao.entity.advice.AdviceMaterial">
-        update cinema_advice_material set file_path = #{filePath}, update_time = #{updateTime}, upload = true where id = #{id}
+    <update id="update" parameterType="howard.cinema.core.dao.entity.advice.AdviceMaterial">
+        update cinema_advice_material
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="upload != null">
+                upload = #{upload},
+            </if>
+            <if test="thumbnail != null and thumbnail != ''">
+                thumbnail = #{thumbnail},
+            </if>
+            <if test="filePath != null and filePath != ''">
+                file_path = #{filePath},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime}
+            </if>
+        </set>
+        where id = #{id}
     </update>
 
     <select id="list" resultMap="ResultMap" parameterType="howard.cinema.core.manage.model.advice.AdviceMaterialListRequest">
@@ -46,12 +69,13 @@
         <where>
             <if test="materialType != null">material_type = #{materialType}</if>
             <if test="name != null and name != ''">and name = #{name}</if>
+            and has_delete = false
         </where>
     </select>
 
-    <update id="updateDelete" parameterType="String">
+    <update id="updateDelete">
         update cinema_advice_material
-        set has_delete = true
+        set has_delete = true, update_time = #{updateTime}
         where id = #{id}
     </update>
 </mapper>

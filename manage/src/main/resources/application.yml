@@ -121,3 +121,7 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
+upload:
+  chunkSize: 5 242 880
+
+

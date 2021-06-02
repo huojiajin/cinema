@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="howard.cinema.core.dao.mapper.advice.AdviceScheduleMapper">
+
+    <resultMap id="ResultMap" type="howard.cinema.core.dao.entity.advice.AdviceSchedule">
+        <id column="id" property="id"/>
+        <result column="insert_time" property="insertTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="name" property="name"/>
+        <result column="position_type" property="positionType"/>
+        <result column="material_type" property="materialType"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="operator_name" property="operatorName"/>
+        <result column="has_delete" property="hasDelete"/>
+    </resultMap>
+
+    <sql id="Insert_Column">
+        id,insert_time,update_time,name,position_type,material_type,start_time,end_time,operator_id,operator_name,has_delete
+    </sql>
+
+    <select id="findById" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_advice_schedule where id = #{id} and has_delete = false
+    </select>
+
+    <select id="findAll" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_advice_schedule where has_delete = false order by update_time desc
+    </select>
+
+    <insert id="persist" parameterType="howard.cinema.core.dao.entity.advice.AdviceSchedule">
+        insert into cinema_advice_schedule (
+        <include refid="Insert_Column"/>
+        ) values (
+        #{id},#{insertTime},#{updateTime},#{name},#{position_type},#{material_type},#{start_time},#{end_time},
+                  #{operator_id},#{operator_name},#{has_delete}
+        )
+    </insert>
+
+    <select id="list" resultMap="ResultMap" parameterType="howard.cinema.core.manage.model.advice.AdviceScheduleListRequest">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_advice_schedule
+        <where>
+            <if test="materialType != null">material_type = #{materialType}</if>
+            <if test="positionType != null">and material_type = #{materialType}</if>
+            <if test="cinemaId != null and cinemaId != ''">
+                and id exists (select c.schedule_id from cinema_advice_schedule_cinema c where c.cinema_id = #{cinemaId})
+            </if>
+            and has_delete = false
+        </where>
+    </select>
+
+    <update id="updateDelete">
+        update cinema_advice_schedule
+        set has_delete = true, update_time = #{updateTime}
+        where id = #{id}
+    </update>
+</mapper>

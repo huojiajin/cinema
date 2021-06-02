@@ -39,8 +39,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         CommonListReponse<CinemaQueryModel> data = new CommonListReponse<>();
         List<CinemaQueryModel> childCinemaList = findChildCinemaList(request.getParentId());//最顶层影院父类ID为空
         data.setResult(childCinemaList);
-        response.setData(data);
-        return response.toJson();
+        return response.setData(data);
     }
 
     /**
@@ -70,8 +69,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         CommonListReponse<Cinema> data = new CommonListReponse<>();
         List<Cinema> list = cinemaMapper.listUse();
         data.setResult(list);
-        response.setData(data);
-        return response.toJson();
+        return response.setData(data);
     }
 
     @Override
@@ -87,8 +85,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         BeanUtils.copyProperties(addRequest, cinema);
         cinemaMapper.persist(cinema);
         addSysLog("添加影城" + name, addRequest.getToken(), cinema.getId());
-        response.setMessage("添加影城成功");
-        return response.toJson();
+        return response.setMessage("添加影城成功");
     }
 
     @Override
@@ -110,8 +107,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
         cinema.setUpdateTime(LocalDateTime.now());
         cinemaMapper.update(cinema);
         addSysLog("修改影城" + name, editRequest.getToken(), editRequest.getId());
-        response.setMessage("修改影城成功");
-        return response.toJson();
+        return response.setMessage("修改影城成功");
     }
 
     @Override
@@ -123,8 +119,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
 //        }
         cinemaMapper.updateStop(true, deleteRequest.getId());
         addSysLog("停用影城", deleteRequest.getToken(), deleteRequest.getId());
-        response.setMessage("停用影城成功");
-        return response.toJson();
+        return response.setMessage("停用影城成功");
     }
 
     @Override
@@ -136,8 +131,7 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
 //        }
         cinemaMapper.updateStop(false, deleteRequest.getId());
         addSysLog("启用影城", deleteRequest.getToken(), deleteRequest.getId());
-        response.setMessage("启用影城成功");
-        return response.toJson();
+        return response.setMessage("启用影城成功");
     }
 
     @Override
@@ -152,7 +146,6 @@ public class CinemaManagerImpl extends AbstractManager implements CinemaManager 
             return model;
         }).collect(Collectors.toList());
         data.setResult(result);
-        response.setData(data);
-        return response.toJson();
+        return response.setData(data);
     }
 }

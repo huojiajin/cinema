@@ -63,8 +63,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
             }
             return model;
         }).collect(Collectors.toList()));
-        response.setData(page);
-        return response.toJson();
+        return response.setData(page);
     }
 
     @Override
@@ -73,8 +72,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
         List<Role> list = roleMapper.findAll();
         CommonListReponse<Role> data = new CommonListReponse<>();
         data.setResult(list);
-        response.setData(data);
-        return response.toJson();
+        return response.setData(data);
     }
 
     @Override
@@ -97,8 +95,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
         role.setCinemaName(cinema.getName());
         roleMapper.persist(role);
         addSysLog("添加角色" + name, addRequest.getToken(), role.getId());
-        response.setMessage("添加角色成功");
-        return response.toJson();
+        return response.setMessage("添加角色成功");
     }
 
     @Override
@@ -123,8 +120,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
         role.setUpdateTime(LocalDateTime.now());
         roleMapper.update(role);
         addSysLog("修改角色" + editRequest.getName(), editRequest.getToken(), editRequest.getId());
-        response.setMessage("修改角色成功");
-        return response.toJson();
+        return response.setMessage("修改角色成功");
     }
 
     @Override
@@ -143,8 +139,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
         }
         roleMapper.updateDelete(deleteRequest.getId());
         addSysLog("删除角色" + role.getName(), deleteRequest.getToken(), deleteRequest.getId());
-        response.setMessage("删除角色成功");
-        return response.toJson();
+        return response.setMessage("删除角色成功");
     }
 
     @Override
@@ -166,8 +161,7 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
         }
         roleResourceUpdate(roleId, roleResourceList);
         addSysLog("配置角色" + role.getName() + "的权限", resourceRequest.getToken(), resourceRequest.getId());
-        response.setMessage("配置权限成功");
-        return response.toJson();
+        return response.setMessage("配置权限成功");
     }
 
     @Transactional(rollbackFor=Exception.class)
@@ -185,7 +179,6 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
             List<Integer> codeList = roleResources.stream().map(r -> r.getResourceType().getCode()).collect(Collectors.toList());
             data.setResult(codeList);
         }
-        response.setData(data);
-        return response.toJson();
+        return response.setData(data);
     }
 }

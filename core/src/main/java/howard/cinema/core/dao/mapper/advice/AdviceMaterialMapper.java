@@ -3,6 +3,7 @@ package howard.cinema.core.dao.mapper.advice;
 import howard.cinema.core.dao.entity.advice.AdviceMaterial;
 import howard.cinema.core.manage.model.advice.AdviceMaterialListRequest;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +14,17 @@ import java.util.List;
  *@author: huojiajin
  *@time: 2021/5/31 15:19
 **/
+@Component
 public interface AdviceMaterialMapper {
+
+    /**
+     * @name: findById
+     * @description: 根据ID查询实体
+     * @author: huojiajin
+     * @para: [id]
+     * @return: howard.cinema.core.dao.entity.advice.AdviceMaterial
+    **/
+    AdviceMaterial findById(@Param("id")String id);
 
     /**
      * @name: findAll
@@ -43,13 +54,13 @@ public interface AdviceMaterialMapper {
     void persist(AdviceMaterial material);
 
     /**
-     * @name: updateUpload
-     * @description: 上传文件更新
+     * @name: update
+     * @description: 更新实体
      * @author: huojiajin
-     * @para: [id, filePath, updateTime]
+     * @para: [material]
      * @return: void
-    **/
-    void updateUpload(@Param("id")String id, @Param("filePath")String filePath, @Param("updateTime")LocalDateTime updateTime);
+    **/  
+    void update(AdviceMaterial material);
 
     /**
      * @name: updateDelete
@@ -58,5 +69,5 @@ public interface AdviceMaterialMapper {
      * @para: [id]
      * @return: void
     **/
-    void updateDelete(@Param("id") String id);
+    void updateDelete(@Param("id") String id, @Param("updateTime")LocalDateTime updateTime);
 }

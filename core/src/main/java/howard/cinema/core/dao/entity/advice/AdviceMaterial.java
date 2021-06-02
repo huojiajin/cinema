@@ -1,6 +1,5 @@
 package howard.cinema.core.dao.entity.advice;
 
-import howard.cinema.core.dao.dict.advice.MaterialStatus;
 import howard.cinema.core.dao.dict.advice.MaterialType;
 import howard.cinema.core.dao.entity.common.AbstractUpdateTimeEntity;
 
@@ -18,7 +17,6 @@ public class AdviceMaterial extends AbstractUpdateTimeEntity {
     private String thumbnail;//缩略图
     private String filePath;//文件路径
     private String remark;//备注
-    private MaterialStatus status;//状态
     private String operatorId;//上传人ID
     private boolean hasDelete;
 
@@ -68,14 +66,6 @@ public class AdviceMaterial extends AbstractUpdateTimeEntity {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public MaterialStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(MaterialStatus status) {
-        this.status = status;
     }
 
     public String getOperatorId() {

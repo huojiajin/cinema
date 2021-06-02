@@ -60,12 +60,11 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager {
         memcachedClient.set(MyMecachedPrefix.loginVerifyImagePrefix + verifyId, 5 * 60, verifyImage.getVerifyCode());
         try {
             VerifyResponse verifyResponse = new VerifyResponse(verifyImage.getBuffImg(), verifyId);
-            response.setData(verifyResponse);
+            return response.setData(verifyResponse);
         } catch (IOException e) {
             logger.error("", e);
-            response.setError(ErrorType.CONVERT);
+            return response.setError(ErrorType.CONVERT);
         }
-        return response.toJson();
     }
 
     @Override
@@ -119,8 +118,7 @@ public class LoginManagerImpl extends CommonAbstract implements LoginManager {
 
         //拼装返回信息
         LoginResponse loginResponse = assmbleLoginResponse(user, token, resourceModelList);
-        response.setData(loginResponse);
-        return response.toJson();
+        return response.setData(loginResponse);
     }
 
     @Override

@@ -79,8 +79,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
             model.setCinemaName(cinema.getName());
             return model;
         }).collect(Collectors.toList()));
-        response.setData(page);
-        return response.toJson();
+        return response.setData(page);
     }
 
     @Override
@@ -109,8 +108,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
         user.setPassword(password);
         userMapper.persist(user);
         addSysLog("添加用户" + addRequest.getLoginName(), addRequest.getToken(), user.getId());
-        response.setMessage("添加用户成功");
-        return response.toJson();
+        return response.setMessage("添加用户成功");
     }
 
     @Override
@@ -125,10 +123,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
         User user = userMapper.findById(editRequest.getId());
         BeanUtils.copyProperties(editRequest, user);
         user.setUpdateTime(LocalDateTime.now());
-        addSysLog("修改用户" + editRequest.getName(), editRequest.getToken(), user.getId());
-        response.setMessage("修改用户成功");
         userMapper.update(user);
-        return response.toJson();
+        addSysLog("修改用户" + editRequest.getName(), editRequest.getToken(), user.getId());
+        return response.setMessage("修改用户成功");
     }
 
     @Override
@@ -140,8 +137,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
         }
         userMapper.updateStatus(User.UserStatus.INVALID, LocalDateTime.now(), deleteRequest.getId());
         addSysLog("停用用户" + user.getName(), deleteRequest.getToken(), deleteRequest.getId());
-        response.setMessage("停用用户成功");
-        return response.toJson();
+        return response.setMessage("停用用户成功");
     }
 
     @Override
@@ -153,8 +149,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
         }
         userMapper.updateStatus(User.UserStatus.NORMAL, LocalDateTime.now(), startRequest.getId());
         addSysLog("启动用户" + user.getName(), startRequest.getToken(), startRequest.getId());
-        response.setMessage("启用用户成功");
-        return response.toJson();
+        return response.setMessage("启用用户成功");
 
     }
 }
