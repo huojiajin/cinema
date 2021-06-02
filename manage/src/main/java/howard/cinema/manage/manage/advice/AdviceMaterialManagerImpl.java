@@ -2,6 +2,7 @@ package howard.cinema.manage.manage.advice;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import howard.cinema.core.dao.entity.acl.User;
 import howard.cinema.core.dao.entity.advice.AdviceMaterial;
 import howard.cinema.core.dao.mapper.advice.AdviceMaterialMapper;
 import howard.cinema.core.manage.model.CommonResponse;
@@ -49,6 +50,8 @@ public class AdviceMaterialManagerImpl extends AbstractManager implements Advice
         AdviceMaterialAddResponse data = new AdviceMaterialAddResponse();
         AdviceMaterial material = new AdviceMaterial();
         BeanUtils.copyProperties(request, material);
+        User user = getUser(request.getToken());
+        material.setOperatorId(user.getId());
         materialMapper.persist(material);
         addSysLog("添加素材" + request.getName(), request.getToken(), material.getId());
         response.setMessage("添加素材成功");

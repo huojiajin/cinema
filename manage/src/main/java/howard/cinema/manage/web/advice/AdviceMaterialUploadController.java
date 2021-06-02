@@ -1,6 +1,8 @@
 package howard.cinema.manage.web.advice;
 
 import howard.cinema.manage.manage.advice.AdviceMaterialUploadManager;
+import howard.cinema.manage.model.advice.material.upload.AdviceMaterialCheckRequest;
+import howard.cinema.manage.model.advice.material.upload.AdviceMaterialUploadRequest;
 import howard.cinema.manage.web.common.MyBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

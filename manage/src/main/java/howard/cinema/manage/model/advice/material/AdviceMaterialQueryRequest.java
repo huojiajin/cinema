@@ -2,7 +2,6 @@ package howard.cinema.manage.model.advice.material;
 
 import howard.cinema.core.dao.dict.advice.MaterialType;
 import howard.cinema.manage.model.common.CommonPageRequest;
-import howard.cinema.manage.model.common.CommonRequest;
 
 /**
  * @name: AdviceMaterialQueryRequest
