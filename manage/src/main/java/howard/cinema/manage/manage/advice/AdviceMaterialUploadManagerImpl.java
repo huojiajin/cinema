@@ -47,7 +47,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
     /**
      * 这个必须与前端设定的值一致
      */
-    @Value("${breakpoint.upload.chunkSize}")
+    @Value("${upload.chunkSize}")
     private long chunkSize;
 
     //定义素材保存地址

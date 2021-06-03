@@ -9,7 +9,7 @@
         <result column="name" property="name"/>
         <result column="material_type" property="materialType"/>
         <result column="upload" property="upload"/>
-        <result column="thumbnail" property="thumbnail" jdbcType="longtext" javaType="java.lang.String"/>
+        <result column="thumbnail" property="thumbnail" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
         <result column="file_path" property="filePath"/>
         <result column="remark" property="remark"/>
         <result column="operator_id" property="operatorId"/>
