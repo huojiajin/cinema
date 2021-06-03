@@ -1,0 +1,36 @@
+package howard.cinema.manage.advice;
+
+import howard.cinema.core.manage.model.CommonResponse;
+import howard.cinema.core.manage.tools.JsonTools;
+import howard.cinema.core.manage.tools.httpclient.HttpClientHelper;
+import howard.cinema.manage.ApplicationTests;
+import howard.cinema.manage.model.advice.material.AdviceMaterialQueryRequest;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+/**
+ * @ClassName: AdviceMaterialTest
+ * @Description: 广告素材测试
+ * @Author HuoJiaJin
+ * @Date 2021/6/2 23:27
+ * @Version 1.0
+ **/
+public class AdviceMaterialTest extends ApplicationTests {
+
+    @Test
+    public void query() throws IOException {
+
+        AdviceMaterialQueryRequest request = new AdviceMaterialQueryRequest();
+        request.setToken("da6f8a4b35fb4379ac31ba74eb922deb");
+        request.setResourceCode(11);
+        request.setPageSize(1);
+        String url = "http://localhost/manage/advice/material/query";
+//        String url = "http://39.106.226.73/manage/user/add";
+
+        String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
+        echo(responseStr);
+        CommonResponse response = JsonTools.json2Object(responseStr, CommonResponse.class);
+        echo(response);
+    }
+}
