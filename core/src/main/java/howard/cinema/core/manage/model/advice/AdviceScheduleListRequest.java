@@ -12,6 +12,7 @@ import howard.cinema.core.dao.dict.advice.PositionType;
 public class AdviceScheduleListRequest{
 
     private String cinemaId;//影院Id
+    private String materialId;//素材ID
     private PositionType positionType;//广告位
     private MaterialType materialType;//素材类型
 
@@ -21,6 +22,14 @@ public class AdviceScheduleListRequest{
 
     public void setCinemaId(String cinemaId) {
         this.cinemaId = cinemaId;
+    }
+
+    public String getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(String materialId) {
+        this.materialId = materialId;
     }
 
     public PositionType getPositionType() {

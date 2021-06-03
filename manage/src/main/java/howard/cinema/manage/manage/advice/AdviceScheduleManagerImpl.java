@@ -109,7 +109,7 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
 
     @Override
     public String getCinemaList(CommonIdRequest request){
-        CommonResponse<CommonListReponse> response = new CommonResponse<>();
+        CommonResponse<CommonListReponse<AdviceScheduleCinemaModel>> response = new CommonResponse<>();
         CommonListReponse<AdviceScheduleCinemaModel> data = new CommonListReponse<>();
         List<AdviceScheduleCinema> cinemaList = scheduleCinemaMapper.findByScheduleId(request.getId());
         List<AdviceScheduleCinemaModel> cinemaModelList = cinemaList.stream().map(c -> {
@@ -123,7 +123,7 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
 
     @Override
     public String getMaterialList(CommonIdRequest request){
-        CommonResponse<CommonListReponse> response = new CommonResponse<>();
+        CommonResponse<CommonListReponse<AdviceScheduleMaterialModel>> response = new CommonResponse<>();
         CommonListReponse<AdviceScheduleMaterialModel> data = new CommonListReponse<>();
         List<AdviceScheduleMaterial> materialList = scheduleMaterialMapper.findByScheduleId(request.getId());
         List<AdviceScheduleMaterialModel> materialModelList = materialList.stream().map(c -> {
