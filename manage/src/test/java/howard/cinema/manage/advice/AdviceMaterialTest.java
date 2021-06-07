@@ -22,11 +22,11 @@ public class AdviceMaterialTest extends ApplicationTests {
     public void query() throws IOException {
 
         AdviceMaterialQueryRequest request = new AdviceMaterialQueryRequest();
-        request.setToken("da6f8a4b35fb4379ac31ba74eb922deb");
+        request.setToken("07f59c501ab54303b412e3a770aabca4");
         request.setResourceCode(11);
         request.setPageSize(1);
-        String url = "http://localhost/manage/advice/material/query";
-//        String url = "http://39.106.226.73/manage/user/add";
+//        String url = "http://localhost/manage/advice/material/query";
+        String url = "http://39.106.226.73:8080/manage/advice/material/query";
 
         String responseStr = HttpClientHelper.jsonPost(url, request.toJson());
         echo(responseStr);

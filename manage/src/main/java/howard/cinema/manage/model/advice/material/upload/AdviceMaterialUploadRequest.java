@@ -1,5 +1,7 @@
 package howard.cinema.manage.model.advice.material.upload;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import howard.cinema.manage.manage.common.MultipartFileJsonHandler;
 import howard.cinema.manage.model.common.CommonIdRequest;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,6 +48,7 @@ public class AdviceMaterialUploadRequest extends CommonIdRequest {
         return size;
     }
 
+    @JsonDeserialize(using = MultipartFileJsonHandler.class)
     public void setSize(long size) {
         this.size = size;
     }

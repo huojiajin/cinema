@@ -5,10 +5,8 @@ import howard.cinema.manage.model.advice.material.upload.AdviceMaterialCheckRequ
 import howard.cinema.manage.model.advice.material.upload.AdviceMaterialUploadRequest;
 import howard.cinema.manage.web.common.MyBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -31,7 +29,8 @@ public class AdviceMaterialUploadController extends MyBaseController {
     }
 
     @PostMapping(value = "/upload")
-    public String fileUpload(@Valid @RequestBody AdviceMaterialUploadRequest request) {
+    public String fileUpload(@Valid @RequestBody AdviceMaterialUploadRequest request, @RequestParam("file") MultipartFile file) {
+        request.setFile(file);
         return manager.uploadFile(request);
     }
 }
