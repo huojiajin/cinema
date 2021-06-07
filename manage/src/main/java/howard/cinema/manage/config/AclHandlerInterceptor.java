@@ -14,13 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -47,9 +50,15 @@ public class AclHandlerInterceptor implements HandlerInterceptor {
             String[] urlSplitArr = requestURI.substring(1).split("/");
             if (!urlSplitArr[1].equals("login") && !urlSplitArr[1].equals("error")
                     && !urlSplitArr[1].equals("schedule") && !urlSplitArr[1].equals("health")) {//除登陆操作、返回错误、出发定时任务操作之外
-                String requestData = getOpenApiRequestData(request);
-                if (requestData.length() < 500) logger.info("request:{}", requestData);
-                CommonRequest commonRequest = JsonTools.json2Object(requestData, CommonRequest.class);
+                CommonRequest commonRequest;
+                String contentType = request.getContentType();
+                if (contentType != null && contentType.contains("multipart/form-data")) {//判断是否form/data提交
+                    return true;
+                }else {
+                    String requestData = getOpenApiRequestData(request);
+                    if (requestData.length() < 500) logger.info("json request:{}", requestData);
+                    commonRequest = JsonTools.json2Object(requestData, CommonRequest.class);
+                }
                 String userKey = MyMecachedPrefix.loginTokenPrefix + commonRequest.getToken();
                 Object userObject = memcachedClient.get(userKey);
                 if (userObject == null) {

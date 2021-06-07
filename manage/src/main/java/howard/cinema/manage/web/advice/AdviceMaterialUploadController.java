@@ -29,8 +29,7 @@ public class AdviceMaterialUploadController extends MyBaseController {
     }
 
     @PostMapping(value = "/upload")
-    public String fileUpload(@Valid @RequestBody AdviceMaterialUploadRequest request, @RequestParam("file") MultipartFile file) {
-        request.setFile(file);
+    public String fileUpload(@Valid AdviceMaterialUploadRequest request) {
         return manager.uploadFile(request);
     }
 }

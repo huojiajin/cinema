@@ -50,7 +50,7 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
 
     @Override
     public String query(AdviceScheduleQueryRequest request){
-        CommonResponse<PageInfo> response = new CommonResponse();
+        CommonResponse<PageInfo<AdviceSchedule>> response = new CommonResponse<>();
         AdviceScheduleListRequest listRequest = new AdviceScheduleListRequest();
         BeanUtils.copyProperties(request, listRequest);
         PageHelper.startPage(request.getPageNo(), request.getPageSize());
@@ -63,7 +63,7 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
 
     @Override
     public String add(AdviceScheduleAddRequest request){
-        CommonResponse response = new CommonResponse();
+        CommonResponse<String> response = new CommonResponse<>();
         AdviceSchedule schedule = new AdviceSchedule();
         BeanUtils.copyProperties(request, schedule);
         schedule.setStartTime(MyTimeTools.strToDate(request.getStartTime()));
@@ -101,7 +101,7 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
 
     @Override
     public String delete(CommonIdRequest request){
-        CommonResponse response = new CommonResponse();
+        CommonResponse<String> response = new CommonResponse<>();
         scheduleMapper.updateDelete(request.getId(), LocalDateTime.now());
         addSysLog("删除排期" + request.getId(), request.getToken(), request.getId());
         return response.setMessage("删除排期成功");

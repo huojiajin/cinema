@@ -51,11 +51,11 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
     private long chunkSize;
 
     //定义素材保存地址
-    private static String fileDirPath = System.getProperty("user.dir") + File.separator + "material" + File.separator;
+    private static final String fileDirPath = System.getProperty("user.dir") + File.separator + "material" + File.separator;
 
     @Override
     public String checkFileMd5(AdviceMaterialCheckRequest request) {
-        CommonResponse response = new CommonResponse();
+        CommonResponse<AdviceMaterialCheckResponse> response = new CommonResponse<>();
         AdviceMaterialCheckResponse data = new AdviceMaterialCheckResponse();
         String id = request.getId();
         AdviceMaterial material = materialMapper.findById(id);
@@ -102,7 +102,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
 
     @Override
     public String uploadFile(AdviceMaterialUploadRequest request) {
-        CommonResponse response = new CommonResponse();
+        CommonResponse<String> response = new CommonResponse<>();
         AdviceMaterial material = materialMapper.findById(request.getId());
         if (material == null){
             return response.setError(ErrorType.VALID, "未找到对应的素材");
@@ -172,7 +172,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
         byte[] bytes = baos.toByteArray();//转换成字节
         String png_base64 = new String(Base64.encodeBase64(bytes));//转换成base64串
         png_base64 = png_base64.replaceAll("\n", "").replaceAll("\r", "");//删除 \r\n
-        String[] split = filePath.split(".");
+        String[] split = filePath.split("\\.");
         return "data:image/" + split[split.length -1] + ";base64," + png_base64;
     }
 
@@ -221,13 +221,12 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
         }
         Java2DFrameConverter converter = new Java2DFrameConverter();
         BufferedImage bi = converter.getBufferedImage(f);
-        if (bool == true) {
+        if (bool) {
             Image image = (Image) bi;
             bi = rotate(image, 90);//图片旋转90度
         }
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         ImageIO.write(bi, "png", os);
-        byte[] sdf = os.toByteArray();
         InputStream input = new ByteArrayInputStream(os.toByteArray());
         return "data:image/png;base64," + inputStreamToBase64Str(input);
     }

@@ -67,5 +67,4 @@ public class AdviceMaterialManagerImpl extends AbstractManager implements Advice
         addSysLog("删除素材" + request.getId(), request.getToken(), request.getId());
         return response.setMessage("删除素材成功");
     }
-
 }
