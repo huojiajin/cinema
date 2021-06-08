@@ -4,6 +4,7 @@ import howard.cinema.manage.manage.advice.AdviceMaterialManager;
 import howard.cinema.manage.model.advice.material.AdviceMaterialAddRequest;
 import howard.cinema.manage.model.advice.material.AdviceMaterialQueryRequest;
 import howard.cinema.manage.model.common.CommonIdRequest;
+import howard.cinema.manage.model.common.CommonRequest;
 import howard.cinema.manage.web.common.MyBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

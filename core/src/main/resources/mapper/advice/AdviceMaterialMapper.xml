@@ -36,7 +36,7 @@
         insert into cinema_advice_material (
         <include refid="Insert_Column"/>
         ) values (
-        #{id},#{insertTime},#{updateTime},#{name},#{material_type},#{upload},#{thumbnail},#{file_path},#{remark},#{operator_id},#{has_delete}
+        #{id},#{insertTime},#{updateTime},#{name},#{materialType},#{upload},#{thumbnail},#{filePath},#{remark},#{operatorId},#{hasDelete}
         )
     </insert>
 
