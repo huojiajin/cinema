@@ -13,12 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class AdviceMaterialUploadRequest extends CommonIdRequest {
 
+    private String name;//文件名称
     private String md5;//MD5校验码
     private int chunks;//总分片数量
     private int chunk;//当前为第几块分片
     private long size;//当前分片大小
     private MultipartFile file;//分片文件
-    private String suffix;//文件后缀名
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getMd5() {
         return md5;
@@ -59,13 +67,5 @@ public class AdviceMaterialUploadRequest extends CommonIdRequest {
 
     public void setFile(MultipartFile file) {
         this.file = file;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
     }
 }

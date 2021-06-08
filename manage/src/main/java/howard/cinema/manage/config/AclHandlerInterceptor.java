@@ -53,7 +53,9 @@ public class AclHandlerInterceptor implements HandlerInterceptor {
                 CommonRequest commonRequest;
                 String contentType = request.getContentType();
                 if (contentType != null && contentType.contains("multipart/form-data")) {//判断是否form/data提交
-                    return true;
+                    commonRequest = new CommonRequest();
+                    commonRequest.setToken(request.getParameter("token"));
+                    commonRequest.setResourceCode(Integer.parseInt(request.getParameter("resourceCode")));
                 }else {
                     String requestData = getOpenApiRequestData(request);
                     if (requestData.length() < 500) logger.info("json request:{}", requestData);

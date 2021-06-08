@@ -3,6 +3,7 @@ package howard.cinema.manage.manage.advice;
 import howard.cinema.core.dao.dict.acl.ErrorType;
 import howard.cinema.core.dao.dict.advice.FileUploadStatus;
 import howard.cinema.core.dao.dict.advice.MaterialType;
+import howard.cinema.core.dao.entity.acl.User;
 import howard.cinema.core.dao.entity.advice.AdviceMaterial;
 import howard.cinema.core.dao.mapper.advice.AdviceMaterialMapper;
 import howard.cinema.core.manage.model.CommonResponse;
@@ -21,11 +22,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -102,6 +105,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
 
     @Override
     public String uploadFile(AdviceMaterialUploadRequest request) {
+        User user = getUser(request.getToken());
         CommonResponse<String> response = new CommonResponse<>();
         AdviceMaterial material = materialMapper.findById(request.getId());
         if (material == null){
@@ -109,8 +113,11 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
         }
         try {
             logger.info("上传分块文件开始,素材ID：{}，分块：{}", request.getId(), request.getChunk());
-            String fileName = request.getId() + "." + request.getSuffix();
-            String uploadDirPath = fileDirPath + request.getMd5();
+            //获取后缀
+            String[] suffixArr = request.getName().split("\\.");
+            String suffix = suffixArr[suffixArr.length - 1];
+            String fileName = request.getId() + "." + suffix;
+            String uploadDirPath = fileDirPath + request.getId();
             String tempFileName = fileName + FileConstants.FILE_NAME_TMP_SUFFIX;
             File tmpDir = new File(uploadDirPath);
             File tmpFile = new File(uploadDirPath, tempFileName);
@@ -122,6 +129,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
             }
 
             File confFile = new File(uploadDirPath, request.getId() + FileConstants.FILE_NAME_CONF_SUFFIX);
+            addSysLog("上传分块文件,素材ID：" + request.getId() + "，分块：" + request.getChunk(), request.getToken(), request.getId());
             // 上传分块文件
             uploadChunkFileByRandomAccessFile(request, tmpFile);
             //标记上传进度
@@ -135,14 +143,17 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
                 material.setUpload(true);
                 String thumbnailBase64 = "";
                 if (material.getMaterialType() == MaterialType.PICTURE){
-                    thumbnailBase64 = getImageThumbnail(allFilePath);
+                    thumbnailBase64 = getImageThumbnail(allFilePath, suffix);
                 }else if (material.getMaterialType() == MaterialType.VIDEO){
                     thumbnailBase64 = getVideoThumbnail(allFilePath);
                 }
                 material.setThumbnail(thumbnailBase64);
+                material.setUpdateTime(LocalDateTime.now());
+                materialMapper.update(material);
+                addSysLog("上传素材文件成功", request.getToken(), request.getId());
             }
             // 更新上传结果
-            updateUploadResult(request, isComplete);
+            updateUploadResult(request, isComplete, suffix);
             // 删除conf文件
             if (isComplete) {
                 confFile.delete();
@@ -163,17 +174,65 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
      * @para: [filePath]
      * @return: java.lang.String
     **/
-    private String getImageThumbnail(String filePath) throws IOException {
-        //获取缩略图文件
-        BufferedImage bufferedImage = Thumbnails.of(filePath).size(200, 300).asBufferedImage();
-        //将缩略图转换成base64
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();//io流
-        ImageIO.write(bufferedImage, "png", baos);//写入流中
-        byte[] bytes = baos.toByteArray();//转换成字节
-        String png_base64 = new String(Base64.encodeBase64(bytes));//转换成base64串
-        png_base64 = png_base64.replaceAll("\n", "").replaceAll("\r", "");//删除 \r\n
-        String[] split = filePath.split("\\.");
-        return "data:image/" + split[split.length -1] + ";base64," + png_base64;
+    private String getImageThumbnail(String filePath, String suffix) throws IOException {
+
+        try {
+            String[] split = filePath.split("\\\\");
+            // 使用源图像文件名创建ImageIcon对象。里面使用了toolkit，性能相对IOimage.read稳定，比thumbnailtor占用内存少
+            ImageIcon imgIcon = new ImageIcon(split[split.length - 1]);
+            // 得到Image对象。
+            Image srcImage = imgIcon.getImage();
+            // 计算比例
+            int width = -1;
+            int height = -1;
+            int rate = 0;
+            width = srcImage.getWidth(null); // 得到源图宽
+            height = srcImage.getHeight(null); // 得到源图长
+            if (width > 0 && height > 0) {
+                int rate1 = width / 5;//宽度缩略比例
+                int rate2 = height / 5;//高度缩略比例
+                if (rate1 > rate2) {//宽度缩略比例大于高度缩略比例，使用宽度缩略比例
+                    rate = rate1;
+                } else {
+                    rate = rate2;
+                }
+            } else {
+                // 防止宽高未获取到，额，显然可能多此一举，图个安心
+                rate = 1;
+                width = 200;
+                height = 200;
+            }
+
+            //计算缩略图最终的宽度和高度
+            int newWidth = width / rate;
+            int newHeight = height / rate;
+            // 定义BufferedImage，后面那个TYPE_INT_RGB网上大多数用这个，所以没管为啥
+            BufferedImage bufferedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+            // 创建Graphics2D对象，用于在BufferedImage对象上绘图。
+            Graphics2D graphics = bufferedImage.createGraphics();
+            // 设置图形上下文的当前颜色为白色。
+            graphics.setColor(Color.WHITE);
+            // 用图形上下文的当前颜色填充指定的矩形区域。
+            graphics.fillRect(0, 0, newWidth, newHeight);
+            // 按照缩放的大小在BufferedImage对象上绘制原始图像。
+            graphics.drawImage(srcImage, 0, 0, newWidth, newHeight, null);
+            // 释放图形上下文使用的系统资源。
+            graphics.dispose();
+            // 网上很多人说formatname为png生成出来的图片不会有错误，抱着侥幸心理，就写png了，貌似还有gif和jpg这两种可以用
+            //将缩略图转换成base64
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();//io流
+            ImageIO.write(bufferedImage, suffix, baos);//写入流中
+            srcImage.flush();
+            bufferedImage.flush();
+            graphics.dispose();
+            byte[] bytes = baos.toByteArray();//转换成字节
+            String png_base64 = new String(Base64.encodeBase64(bytes));//转换成base64串
+            png_base64 = png_base64.replaceAll("\n", "").replaceAll("\r", "");//删除 \r\n
+            return "data:image/" + suffix + ";base64," + png_base64;
+        } catch (Exception e) {
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>生成缩略图错误      " + e.getMessage());
+            throw new IOException("生成缩略图错误");
+        }
     }
 
     /**
@@ -284,7 +343,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
         }
     }
 
-    private void updateUploadResult(AdviceMaterialUploadRequest request, boolean isComplete) {
+    private void updateUploadResult(AdviceMaterialUploadRequest request, boolean isComplete, String suffix) {
         logger.info("isComplete ===>{}", isComplete);
         String id = request.getId();
         String md5 = request.getMd5();
@@ -300,7 +359,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
             Object md5Ob = memcachedClient.get(fileMd5Key);
             if (md5Ob == null){
                 memcachedClient.add(fileMd5Key, 0,
-                        fileDirPath + id + File.separator + id + "." + request.getSuffix());
+                        fileDirPath + id + File.separator + id + "." + suffix);
             }
         }
     }
@@ -310,7 +369,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
         try (RandomAccessFile accessConfFile = new RandomAccessFile(confFile, "rw")) {
             // 把该分段标记为 true 表示完成
             accessConfFile.setLength(request.getChunks());
-            accessConfFile.seek(request.getChunk());
+            accessConfFile.seek(request.getChunk() - 1);
             accessConfFile.write(Byte.MAX_VALUE);
         }
     }
