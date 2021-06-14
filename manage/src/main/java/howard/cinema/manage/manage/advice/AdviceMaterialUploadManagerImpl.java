@@ -3,7 +3,6 @@ package howard.cinema.manage.manage.advice;
 import howard.cinema.core.dao.dict.acl.ErrorType;
 import howard.cinema.core.dao.dict.advice.FileUploadStatus;
 import howard.cinema.core.dao.dict.advice.MaterialType;
-import howard.cinema.core.dao.entity.acl.User;
 import howard.cinema.core.dao.entity.advice.AdviceMaterial;
 import howard.cinema.core.dao.mapper.advice.AdviceMaterialMapper;
 import howard.cinema.core.manage.model.CommonResponse;
@@ -12,7 +11,6 @@ import howard.cinema.manage.manage.tools.FileConstants;
 import howard.cinema.manage.model.advice.material.upload.AdviceMaterialCheckRequest;
 import howard.cinema.manage.model.advice.material.upload.AdviceMaterialCheckResponse;
 import howard.cinema.manage.model.advice.material.upload.AdviceMaterialUploadRequest;
-import net.coobird.thumbnailator.Thumbnails;
 import net.spy.memcached.MemcachedClient;
 import org.apache.commons.codec.binary.Base64;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -105,7 +103,6 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
 
     @Override
     public String uploadFile(AdviceMaterialUploadRequest request) {
-        User user = getUser(request.getToken());
         CommonResponse<String> response = new CommonResponse<>();
         AdviceMaterial material = materialMapper.findById(request.getId());
         if (material == null){
@@ -121,6 +118,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
             String tempFileName = fileName + FileConstants.FILE_NAME_TMP_SUFFIX;
             File tmpDir = new File(uploadDirPath);
             File tmpFile = new File(uploadDirPath, tempFileName);
+            logger.info("======文件大小为：" + tmpFile.length());
             if (!tmpDir.exists()) {
                 boolean mkdirs = tmpDir.mkdirs();
                 if (!mkdirs) {
@@ -335,7 +333,7 @@ public class AdviceMaterialUploadManagerImpl extends AbstractManager implements 
 
     private void uploadChunkFileByRandomAccessFile(AdviceMaterialUploadRequest request, File tmpFile) throws IOException {
         try (RandomAccessFile accessTmpFile = new RandomAccessFile(tmpFile, "rw")) {
-            long offset = chunkSize * request.getChunk();
+            long offset = tmpFile.length() < chunkSize * request.getChunk() ? tmpFile.length() : chunkSize * request.getChunk();
             // 定位到该分片的偏移量
             accessTmpFile.seek(offset);
             // 写入该分片数据

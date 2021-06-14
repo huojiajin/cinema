@@ -51,7 +51,7 @@
             <if test="cinemaId != null and cinemaId != ''">
                 and id exists (select c.schedule_id from cinema_advice_schedule_cinema c where c.cinema_id = #{cinemaId})
             </if>
-            <if test="materialId ！= null and materialId != ''">
+            <if test="materialId != null and materialId != ''">
                 and id exists (select m.schedule_id from cinema_advice_schedule_material m where m.material_id = #{materialId})
             </if>
             and has_delete = false

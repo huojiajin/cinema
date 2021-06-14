@@ -1,14 +1,5 @@
 package howard.cinema.manage.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +33,6 @@ public class MyFilter implements Filter {
         String contentType = request.getContentType();
         if (contentType != null && contentType.contains("multipart/form-data")) {
             chain.doFilter(request, response);
-            return;
         }else {
             ServletRequest requestWrapper = null;
             if (request instanceof HttpServletRequest) {

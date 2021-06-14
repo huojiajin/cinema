@@ -122,6 +122,7 @@ mybatis:
 
 
 upload:
-  chunkSize: 5 242 880
+  chunkSize: 2 097 152
+  viewPath: http://39.106.226.73:8001/manage/advice/material/view/
 
 

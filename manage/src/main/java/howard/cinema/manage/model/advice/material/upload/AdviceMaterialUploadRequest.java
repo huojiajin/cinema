@@ -1,7 +1,6 @@
 package howard.cinema.manage.model.advice.material.upload;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import howard.cinema.manage.manage.common.MultipartFileJsonHandler;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import howard.cinema.manage.model.common.CommonIdRequest;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +17,7 @@ public class AdviceMaterialUploadRequest extends CommonIdRequest {
     private int chunks;//总分片数量
     private int chunk;//当前为第几块分片
     private long size;//当前分片大小
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private MultipartFile file;//分片文件
 
     public String getName() {
@@ -56,7 +56,6 @@ public class AdviceMaterialUploadRequest extends CommonIdRequest {
         return size;
     }
 
-    @JsonDeserialize(using = MultipartFileJsonHandler.class)
     public void setSize(long size) {
         this.size = size;
     }
