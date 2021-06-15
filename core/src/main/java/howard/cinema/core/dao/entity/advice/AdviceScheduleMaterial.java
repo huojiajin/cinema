@@ -14,6 +14,7 @@ public class AdviceScheduleMaterial extends AbstractInsertTimeEntity {
     private String materialId;//素材ID
     private String materialName;//素材名称
     private String list;//素材排序
+    private String filePath;//文件地址
 
     public String getScheduleId() {
         return scheduleId;
@@ -45,5 +46,13 @@ public class AdviceScheduleMaterial extends AbstractInsertTimeEntity {
 
     public void setList(String list) {
         this.list = list;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

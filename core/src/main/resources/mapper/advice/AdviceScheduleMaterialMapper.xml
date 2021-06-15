@@ -9,24 +9,31 @@
         <result column="material_id" property="materialId"/>
         <result column="material_name" property="materialName"/>
         <result column="list" property="list"/>
+        <result column="file_path" property="filePath"/>
     </resultMap>
 
     <sql id="Insert_Column">
-        id,insert_time,schedule_id,cinema_id,cinema_name
+        id,insert_time,schedule_id,material_id,material_name,list,file_path
     </sql>
 
     <select id="findByScheduleId" resultMap="ResultMap">
         select
         <include refid="Insert_Column"/>
-        from cinema_advice_schedule_material where schedule_id = #{scheduleId}
+        from cinema_advice_schedule_material where schedule_id = #{scheduleId} order by list
+    </select>
+
+    <select id="findByMaterialId" resultMap="ResultMap">
+        select
+        <include refid="Insert_Column"/>
+        from cinema_advice_schedule_material where material_id = #{material_id}
     </select>
 
     <insert id="persistAll" parameterType="list">
         insert into cinema_advice_schedule_material (
         <include refid="Insert_Column"/>
         ) values
-        <foreach collection="list" item="cinema" separator=",">
-            (#{cinema.id},#{cinema.insertTime},#{cinema.scheduleId},#{cinema.cinemaId},#{cinema.cinema_name}
+        <foreach collection="list" item="material" separator=",">
+            (#{material.id},#{material.insertTime},#{material.scheduleId},#{material.materialId},#{material.materialName},#{material.list},#{material.filePath})
         </foreach>
     </insert>
 </mapper>

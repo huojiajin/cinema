@@ -1,6 +1,5 @@
 package howard.cinema.core.dao.mapper.advice;
 
-import howard.cinema.core.dao.entity.advice.AdviceScheduleCinema;
 import howard.cinema.core.dao.entity.advice.AdviceScheduleMaterial;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -33,4 +32,14 @@ public interface AdviceScheduleMaterialMapper {
      * @return: void
     **/
     List<AdviceScheduleMaterial> findByScheduleId(@Param("scheduleId")String scheduleId);
+
+    /**
+     * @Name findByMaterialId
+     * @Author HuoJiaJin
+     * @Description 根据素材ID查询
+     * @Date 2021/6/15 0:05
+     * @Param [materialId]
+     * @Return java.util.List<howard.cinema.core.dao.entity.advice.AdviceScheduleMaterial>
+     **/
+    List<AdviceScheduleMaterial> findByMaterialId(@Param("materialId")String materialId);
 }

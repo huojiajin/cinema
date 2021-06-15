@@ -2,9 +2,12 @@ package howard.cinema.manage.manage.advice;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import howard.cinema.core.dao.dict.acl.ErrorType;
 import howard.cinema.core.dao.entity.acl.User;
 import howard.cinema.core.dao.entity.advice.AdviceMaterial;
+import howard.cinema.core.dao.entity.advice.AdviceScheduleMaterial;
 import howard.cinema.core.dao.mapper.advice.AdviceMaterialMapper;
+import howard.cinema.core.dao.mapper.advice.AdviceScheduleMaterialMapper;
 import howard.cinema.core.manage.model.CommonResponse;
 import howard.cinema.core.manage.model.advice.AdviceMaterialListRequest;
 import howard.cinema.core.manage.tools.FileTools;
@@ -34,6 +37,8 @@ public class AdviceMaterialManagerImpl extends AbstractManager implements Advice
 
     @Autowired
     private AdviceMaterialMapper materialMapper;
+    @Autowired
+    private AdviceScheduleMaterialMapper scheduleMaterialMapper;
     @Value("${upload.viewPath}")
     private String viewPath;
 
@@ -78,6 +83,11 @@ public class AdviceMaterialManagerImpl extends AbstractManager implements Advice
     public String delete(CommonIdRequest request){
         CommonResponse response = new CommonResponse();
         //TODO 判断素材是否在用
+        List<AdviceScheduleMaterial> byMaterialId = scheduleMaterialMapper.findByMaterialId(request.getId());
+        if (!isEmpty(byMaterialId)){
+            return response.setError(ErrorType.VALID, "该素材正在使用，请先删除排期");
+        }
+
         materialMapper.updateDelete(request.getId(), LocalDateTime.now());
         String fileDirPath = System.getProperty("user.dir") + File.separator + "material" + File.separator;
         try {

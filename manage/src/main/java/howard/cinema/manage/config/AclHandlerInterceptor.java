@@ -14,16 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +55,7 @@ public class AclHandlerInterceptor implements HandlerInterceptor {
                     commonRequest.setResourceCode(Integer.parseInt(request.getParameter("resourceCode")));
                 }else {
                     String requestData = getOpenApiRequestData(request);
-                    if (requestData.length() < 500) logger.info("json request:{}", requestData);
+                    if (requestData.length() < 1000) logger.info("json request:{}", requestData);
                     commonRequest = JsonTools.json2Object(requestData, CommonRequest.class);
                 }
                 String userKey = MyMecachedPrefix.loginTokenPrefix + commonRequest.getToken();

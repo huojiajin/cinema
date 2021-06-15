@@ -36,8 +36,8 @@
         insert into cinema_advice_schedule (
         <include refid="Insert_Column"/>
         ) values (
-        #{id},#{insertTime},#{updateTime},#{name},#{position_type},#{material_type},#{start_time},#{end_time},
-                  #{operator_id},#{operator_name},#{has_delete}
+        #{id},#{insertTime},#{updateTime},#{name},#{positionType},#{materialType},#{startTime},#{endTime},
+                  #{operatorId},#{operatorName},#{hasDelete}
         )
     </insert>
 

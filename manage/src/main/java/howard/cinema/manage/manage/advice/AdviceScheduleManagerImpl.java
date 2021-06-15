@@ -83,6 +83,8 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
             AdviceScheduleMaterial material = new AdviceScheduleMaterial();
             BeanUtils.copyProperties(m, material);
             material.setScheduleId(schedule.getId());
+            AdviceMaterial byId = materialMapper.findById(m.getMaterialId());
+            material.setFilePath(byId.getName());
             return material;
         }).collect(Collectors.toList());
 
@@ -129,8 +131,6 @@ public class AdviceScheduleManagerImpl extends AbstractManager implements Advice
         List<AdviceScheduleMaterialModel> materialModelList = materialList.stream().map(c -> {
             AdviceScheduleMaterialModel model = new AdviceScheduleMaterialModel();
             BeanUtils.copyProperties(c, model);
-            AdviceMaterial byId = materialMapper.findById(c.getMaterialId());
-            model.setFilePath(byId.getName());
             return model;
         }).collect(Collectors.toList());
         data.setResult(materialModelList);

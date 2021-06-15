@@ -25,7 +25,7 @@
         <include refid="Insert_Column"/>
         ) values
         <foreach collection="list" item="cinema" separator=",">
-            (#{cinema.id},#{cinema.insertTime},#{cinema.scheduleId},#{cinema.cinemaId},#{cinema.cinema_name}
+            (#{cinema.id},#{cinema.insertTime},#{cinema.scheduleId},#{cinema.cinemaId},#{cinema.cinemaName})
         </foreach>
     </insert>
 </mapper>
