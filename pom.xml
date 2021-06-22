@@ -18,6 +18,7 @@
     <modules>
         <module>core</module>
         <module>manage</module>
+        <module>terminal</module>
     </modules>
 
     <dependencyManagement>

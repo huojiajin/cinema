@@ -1,6 +1,8 @@
 package howard.cinema.manage.web;
 
+import com.rabbitmq.client.AMQP;
 import howard.cinema.manage.web.common.MyBaseController;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;

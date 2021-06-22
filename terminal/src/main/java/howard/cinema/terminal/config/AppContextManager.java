@@ -1,4 +1,4 @@
-package howard.cinema.manage.config;
+package howard.cinema.terminal.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
